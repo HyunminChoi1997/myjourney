@@ -1,8 +1,17 @@
 import React from "react";
-import { HeaderBox } from "./styles";
+import { HeaderFooterBox, HeaderFooterGridBox } from "./styles";
 
 function Header() {
-  return <HeaderBox />;
+  return (
+    <HeaderFooterBox grid="6">
+      <HeaderFooterGridBox>Main</HeaderFooterGridBox>
+      <HeaderFooterGridBox>2</HeaderFooterGridBox>
+      <HeaderFooterGridBox>3</HeaderFooterGridBox>
+      <HeaderFooterGridBox>4</HeaderFooterGridBox>
+      <HeaderFooterGridBox>5</HeaderFooterGridBox>
+      <HeaderFooterGridBox>6</HeaderFooterGridBox>
+    </HeaderFooterBox>
+  );
 }
 
 export default Header;
