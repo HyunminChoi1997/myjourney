@@ -5,7 +5,7 @@ function Header() {
   return (
     <HeaderFooterBox grid="6">
       <HeaderFooterGridBox>Main</HeaderFooterGridBox>
-      <HeaderFooterGridBox>Testing</HeaderFooterGridBox>
+      <HeaderFooterGridBox>2</HeaderFooterGridBox>
       <HeaderFooterGridBox>3</HeaderFooterGridBox>
       <HeaderFooterGridBox>4</HeaderFooterGridBox>
       <HeaderFooterGridBox>5</HeaderFooterGridBox>
