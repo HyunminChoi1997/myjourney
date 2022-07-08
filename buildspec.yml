@@ -4,8 +4,6 @@ phases:
   pre_build:
     commands:
       - cd client
-      - rm -rf node_modules
-      - rm package-lock.json
       - npm install
       - echo npm install succeeded
     finally:
@@ -18,6 +16,7 @@ phases:
       - echo build completed
   post_build:
     commands:
+      - aws cloudfront create-invalidation --distribution-id E2RE6ZCH0T35FW --paths '/*'
       - echo Build Completed on `date`
 
 artifacts:
