@@ -12,6 +12,7 @@ phases:
     commands:
       - npm run build
       - echo build succeeded
+      - aws s3 sync --delete . "s3://myjourney-client"
     finally:
       - echo build completed
   post_build:
