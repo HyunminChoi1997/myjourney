@@ -1,9 +1,9 @@
 version: 0.2
 
 env:
-  secrets-manager:
-    BUCKET_NAME: "myjourneySecret:BUCKET_NAME"
-    DIST_ID: "myjourneySecret:DIST_ID"
+  parameter-store:
+    BUCKET_NAME: "BUCKET_NAME"
+    DIST_ID: "DIST_ID"
 
 phases:
   pre_build:
