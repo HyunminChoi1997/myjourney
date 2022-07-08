@@ -17,7 +17,7 @@ phases:
     commands:
       - npm run build
       - echo build succeeded
-      - aws s3 rm --recursive "s3://${BUCKET_NAME}/"
+      - aws s3 sync --delete . "s3://${BUCKET_NAME}"
       - echo s3 bucket objects removed
     finally:
       - echo build completed
