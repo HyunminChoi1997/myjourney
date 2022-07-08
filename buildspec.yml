@@ -1,5 +1,10 @@
 version: 0.2
 
+env:
+  secrets-manager:
+    BUCKET_NAME: "myjourneySecret:BUCKET_NAME"
+    DIST_ID: "myjourneySecret:DIST_ID"
+
 phases:
   pre_build:
     commands:
@@ -12,12 +17,14 @@ phases:
     commands:
       - npm run build
       - echo build succeeded
-      - aws s3 sync --delete . "s3://myjourney-client"
+      - aws s3 rm --recursive "s3://${BUCKET_NAME}/"
+      - echo s3 bucket objects removed
     finally:
       - echo build completed
   post_build:
     commands:
-      - aws cloudfront create-invalidation --distribution-id E2RE6ZCH0T35FW --paths '/*'
+      - aws cloudfront create-invalidation --distribution-id ${DIST_ID} --paths '/*'
+      - echo cloudfront invalidation completed
       - echo Build Completed on `date`
 
 artifacts:
