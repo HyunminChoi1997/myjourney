@@ -16,6 +16,10 @@ module.exports = (env) => {
           use: "babel-loader",
         },
         {
+          test: /\.css$/,
+          use: ["style-loader", "css-loader"],
+        },
+        {
           test: /\.(png|jpg)$/,
           use: "file-loader",
         },

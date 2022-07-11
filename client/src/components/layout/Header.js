@@ -1,16 +1,45 @@
-import React from "react";
-import { HeaderFooterBox, HeaderFooterGridBox } from "./styles";
+import React, { useState } from "react";
+import Dropdown from "../home/Dropdown";
+import { HeaderNav, HeaderFooterGridBox, NavLink, NavItem } from "./styles";
 
 function Header() {
+  const [dropdown, setdropdown] = useState(false);
+
   return (
-    <HeaderFooterBox grid="6">
-      <HeaderFooterGridBox>Main</HeaderFooterGridBox>
-      <HeaderFooterGridBox>2</HeaderFooterGridBox>
-      <HeaderFooterGridBox>3</HeaderFooterGridBox>
-      <HeaderFooterGridBox>4</HeaderFooterGridBox>
-      <HeaderFooterGridBox>5</HeaderFooterGridBox>
-      <HeaderFooterGridBox>6</HeaderFooterGridBox>
-    </HeaderFooterBox>
+    <HeaderNav grid="6">
+      <HeaderFooterGridBox>
+        <NavLink to="/">Main</NavLink>
+      </HeaderFooterGridBox>
+      <HeaderFooterGridBox />
+      <HeaderFooterGridBox
+        onMouseEnter={() => setdropdown(true)}
+        onMouseLeave={() => setdropdown(false)}
+      >
+        <NavItem>Hello</NavItem>
+        {dropdown && <Dropdown />}
+      </HeaderFooterGridBox>
+      <HeaderFooterGridBox
+        onMouseEnter={() => setdropdown(true)}
+        onMouseLeave={() => setdropdown(false)}
+      >
+        <NavItem>Hello</NavItem>
+        {dropdown && <Dropdown />}
+      </HeaderFooterGridBox>
+      <HeaderFooterGridBox
+        onMouseEnter={() => setdropdown(true)}
+        onMouseLeave={() => setdropdown(false)}
+      >
+        <NavItem>Hello</NavItem>
+        {dropdown && <Dropdown />}
+      </HeaderFooterGridBox>
+      <HeaderFooterGridBox
+        onMouseEnter={() => setdropdown(true)}
+        onMouseLeave={() => setdropdown(false)}
+      >
+        <NavItem>Hello</NavItem>
+        {dropdown && <Dropdown />}
+      </HeaderFooterGridBox>
+    </HeaderNav>
   );
 }
 

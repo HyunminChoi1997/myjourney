@@ -1,9 +1,9 @@
 import React from "react";
-import { HeaderFooterBox, HeaderFooterGridBox } from "./styles";
+import { FooterBox, HeaderFooterGridBox } from "./styles";
 
 function Footer() {
   return (
-    <HeaderFooterBox bgColor="black" fontColor="white" grid="6">
+    <FooterBox grid="6">
       <HeaderFooterGridBox />
       <HeaderFooterGridBox>
         <div className="title">Personal Info</div>
@@ -26,7 +26,7 @@ function Footer() {
       <HeaderFooterGridBox>
         <div className="title">Algo</div>
       </HeaderFooterGridBox>
-    </HeaderFooterBox>
+    </FooterBox>
   );
 }
 
