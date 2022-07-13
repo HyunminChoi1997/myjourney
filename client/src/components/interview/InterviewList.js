@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { basic } from "./dummydata";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBook, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import InterviewCard from "./InterviewCard";
 import {
   FlashcardsBox,
   CreateCardButton,
   ModalBackdrop,
   ModalView,
 } from "./styles";
-import InterviewCard from "./InterviewCard";
-import { basic } from "./dummydata";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBook, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 function InterviewList({ subject }) {
   const [data, setData] = useState([]);
