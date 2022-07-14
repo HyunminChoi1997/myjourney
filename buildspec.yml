@@ -4,7 +4,6 @@ env:
   parameter-store:
     #     BUCKET_NAME: "BUCKET_NAME"
     DIST_ID: "DIST_ID"
-    SERVER_URL: "SERVER_URL"
 
 phases:
   pre_build:
