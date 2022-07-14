@@ -11,7 +11,7 @@ function Home() {
         <h1></h1>
         <h1>안녕하세요</h1>
         <h1>WELCOME</h1>
-        <h1>{process.env.REACT_APP_SERVER_URL}</h1>
+        <h1>{process.env.SERVER_URL}</h1>
       </Background>
     </Layout>
   );
