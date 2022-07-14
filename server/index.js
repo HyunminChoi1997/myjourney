@@ -19,7 +19,7 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-  return res.status(200).send("Server Currently Working");
+  return res.status(200).send(process.env.BUCKET_NAME);
 });
 
 app.use("/sign", sign);
