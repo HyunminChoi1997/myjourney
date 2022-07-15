@@ -11,10 +11,13 @@
   "author": "HyunminChoi",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "mysql2": "^2.3.3",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
     "sequelize": "^6.21.3"
   },
   "devDependencies": {

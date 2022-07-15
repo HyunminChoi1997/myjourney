@@ -5,12 +5,12 @@ function InterviewCard({ data }) {
   const [clicked, setClicked] = useState(false);
 
   return clicked ? (
-    <Flashcard onClick={() => setClicked(!clicked)}>
+    <Flashcard className="answer" onClick={() => setClicked(!clicked)}>
       <div className="title">A.</div>
       <div>{data?.answer}</div>
     </Flashcard>
   ) : (
-    <Flashcard onClick={() => setClicked(!clicked)}>
+    <Flashcard className="question" onClick={() => setClicked(!clicked)}>
       <div className="title">Q.</div>
       <div>{data?.question}</div>
     </Flashcard>

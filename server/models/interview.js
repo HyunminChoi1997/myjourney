@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   interview.init(
     {
       question: DataTypes.STRING,
-      answer: DataTypes.STRING(2000),
+      answer: DataTypes.STRING(750),
       subject: DataTypes.STRING,
     },
     {

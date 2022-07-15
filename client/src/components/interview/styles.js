@@ -12,9 +12,14 @@ export const Flashcard = styled.div`
   flex-direction: column;
   align-items: center;
 
-  > .title {
+  &.answer .title {
     font-size: 2rem;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
+  }
+
+  &.question .title {
+    font-size: 2rem;
+    margin-bottom: 80px;
   }
 `;
 
