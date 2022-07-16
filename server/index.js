@@ -14,11 +14,7 @@ passportStrategy();
 app.use(express.json());
 app.use(
   cors({
-    origin: [
-      "https://www.fatfobcodes.ml",
-      "https://fatfobcodes.ml",
-      "http://localhost:7000",
-    ],
+    origin: ["https://www.fatfobcodes.ml", "https://fatfobcodes.ml", "http://localhost:7000"],
     credentials: true,
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
   })
@@ -39,7 +35,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get("/", (req, res) => {
-  return res.status(200).send(process.env.BUCKET_NAME);
+  return res.status(200).send("Hello");
 });
 
 app.use("/user", user);
