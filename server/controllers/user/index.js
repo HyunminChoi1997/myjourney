@@ -46,20 +46,32 @@ module.exports = {
 
   in: {
     post: async (req, res) => {
-      passport.authenticate("local", (err, user, info) => {
-        if (err) {
-          return res
-            .status(501)
-            .send({ error: err, message: "Something Went Wrong" });
-        }
+      if (req.user) {
+        const { id, nickname, position } = req.user;
+        const userInfo = { id, nickname, position };
+        return res
+          .status(200)
+          .send({ userInfo, message: "Successfully Logged In" });
+      }
 
-        if (!user) {
-          return res
-            .status(401)
-            .send({ message: "Wrong Username or Password" });
-        }
-        return res.status(201).send({ message: "Login Success" });
-      })(req, res);
+      console.log(req);
+      return res.status(200).send("asdfsadf");
+    },
+  },
+
+  out: {
+    post: (req, res) => {
+      try {
+        req.logout((err) => {
+          if (err) {
+            return next(err);
+            // return res.status(400).send({ err, message: "Something Went Wrong" });
+          }
+          return res.status(201).send({ message: "LoggedOut" });
+        });
+      } catch (err) {
+        return res.status(501).send({ err, message: "Something Went Wrong" });
+      }
     },
   },
 };

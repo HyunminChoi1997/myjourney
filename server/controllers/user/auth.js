@@ -9,9 +9,13 @@ module.exports = () => {
   });
 
   passport.deserializeUser(function (userInfo, cb) {
-    user.findById(userInfo.id, function (err, user) {
-      cb(err, user);
-    });
+    try {
+      user.findByPk(userInfo.id).then((res) => {
+        cb(null, res);
+      });
+    } catch (err) {
+      throw err;
+    }
   });
 
   // passport.serializeUser(function (user, cb) {
