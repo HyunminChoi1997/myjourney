@@ -45,6 +45,7 @@ export const FooterBox = styled.div`
 export const HeaderFooterGridBox = styled.div`
   display: flex;
   flex-direction: column;
+
   > .title {
     font-weight: bold;
     font-size: 1.7rem;
@@ -87,4 +88,19 @@ export const LinkItem = styled(Link)`
   text-decoration: none;
   color: black;
   padding: 16px;
+`;
+
+export const SignButton = styled.button`
+  border: none;
+  background-color: white;
+  border-radius: 15px;
+  color: black;
+  font-size: 1.3rem;
+
+  width: 100px;
+  margin: 5px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
