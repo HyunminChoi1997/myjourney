@@ -28,6 +28,10 @@ export const TypeForm = styled.div`
 
       width: 100px;
       height: 50px;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 `;

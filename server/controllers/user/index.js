@@ -2,6 +2,12 @@ const { user } = require("../../models");
 const bcrypt = require("bcrypt");
 
 module.exports = {
+  get: (req, res) => {
+    const { id, nickname, position } = req.user;
+    const userInfo = { id, nickname, position };
+    return res.status(200).send({ userInfo });
+  },
+
   up: {
     post: async (req, res) => {
       const { username, nickname, password } = req.body;
@@ -17,18 +23,24 @@ module.exports = {
           return res.status(409).send({ message: "Nickname Already Exists" });
         }
 
-        bcrypt.hash(password, Number(process.env.SALTROUND), async function (err, hash) {
-          const payload = {
-            username,
-            nickname,
-            password: hash,
-            position,
-          };
-          await user.create(payload);
-          return res.status(201).send({ message: "Signup Success" });
-        });
+        bcrypt.hash(
+          password,
+          Number(process.env.SALTROUND),
+          async function (err, hash) {
+            const payload = {
+              username,
+              nickname,
+              password: hash,
+              position,
+            };
+            await user.create(payload);
+            return res.status(201).send({ message: "Signup Success" });
+          }
+        );
       } catch (err) {
-        return res.status(501).send({ error: err, message: "Something Went Wrong" });
+        return res
+          .status(501)
+          .send({ error: err, message: "Something Went Wrong" });
       }
     },
   },
@@ -38,7 +50,9 @@ module.exports = {
       if (req.user) {
         const { id, nickname, position } = req.user;
         const userInfo = { id, nickname, position };
-        return res.status(200).send({ userInfo, message: "Successfully Logged In" });
+        return res
+          .status(200)
+          .send({ userInfo, message: "Successfully Logged In" });
       }
 
       console.log(req);
@@ -47,15 +61,10 @@ module.exports = {
   },
 
   out: {
-    post: (req, res) => {
+    post: async (req, res) => {
       try {
-        req.logout((err) => {
-          if (err) {
-            return next(err);
-            // return res.status(400).send({ err, message: "Something Went Wrong" });
-          }
-          return res.status(201).send({ message: "LoggedOut" });
-        });
+        await req.logout();
+        return res.status(201).send({ message: "LoggedOut" });
       } catch (err) {
         return res.status(501).send({ err, message: "Something Went Wrong" });
       }

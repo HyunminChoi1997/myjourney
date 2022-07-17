@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Dropdown from "./Dropdown";
 import SignupForm from "../sign/SignupForm";
 import SigninForm from "../sign/SigninForm";
+import Sign from "./Sign";
+import { validateUser } from "../../requests/signRequest";
 import {
   HeaderNav,
   HeaderFooterGridBox,
@@ -18,6 +20,12 @@ function Header() {
 
   const mouseEnterHandler = () => setdropdown(true);
   const mouseLeaveHandler = () => setdropdown(false);
+
+  const { user, isLoading, isError } = validateUser();
+
+  console.log("isLoading : ", isLoading);
+  console.log("isError : ", isError);
+  console.log("user : ", user);
 
   return (
     <HeaderNav
@@ -45,20 +53,27 @@ function Header() {
         style={{ flexDirection: "row", justifyContent: "right", height: "6vh" }}
         onMouseEnter={mouseLeaveHandler}
       >
-        <SignButton onClick={() => setSigninModal(true)}>Signin</SignButton>
-        {signinModal && (
-          <SigninForm
-            open={signinModal}
-            closeHandler={() => setSigninModal(false)}
-          />
-        )}
-        <SignButton onClick={() => setSignupModal(true)}>Signup</SignButton>
-        {signupModal && (
-          <SignupForm
-            open={signupModal}
-            closeHandler={() => setSignupModal(false)}
-          />
-        )}
+        <Sign user={user} />
+        {/* {user ? (
+          <SignButton>Signout</SignButton>
+        ) : (
+          <>
+            <SignButton onClick={() => setSigninModal(true)}>Signin</SignButton>
+            {signinModal && (
+              <SigninForm
+                open={signinModal}
+                closeHandler={() => setSigninModal(false)}
+              />
+            )}
+            <SignButton onClick={() => setSignupModal(true)}>Signup</SignButton>
+            {signupModal && (
+              <SignupForm
+                open={signupModal}
+                closeHandler={() => setSignupModal(false)}
+              />
+            )}
+          </>
+        )} */}
       </HeaderFooterGridBox>
     </HeaderNav>
   );
