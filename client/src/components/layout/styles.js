@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const HeaderNav = styled.nav`
-  height: 6vh;
+  height: 57px;
   background: #1b1919;
   color: white;
 
@@ -45,6 +45,7 @@ export const FooterBox = styled.div`
 export const HeaderFooterGridBox = styled.div`
   display: flex;
   flex-direction: column;
+
   > .title {
     font-weight: bold;
     font-size: 1.7rem;
@@ -64,7 +65,6 @@ export const DropdownMenu = styled.ul`
 
   text-align: left;
 
-  display: relative;
   z-index: 1;
 
   &.clicked {
@@ -87,4 +87,20 @@ export const LinkItem = styled(Link)`
   text-decoration: none;
   color: black;
   padding: 16px;
+`;
+
+export const SignButton = styled.button`
+  border: none;
+  background-color: white;
+  border-radius: 15px;
+  color: black;
+  font-size: 1.3rem;
+
+  width: 100px;
+  height: 46px;
+  margin: 5px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "user_id",
         targetKey: "id",
       });
+      interview.hasMany(models.memorized, {
+        foreignKey: "interview_id",
+        sourceKey: "id",
+      });
     }
   }
   interview.init(
@@ -19,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       question: DataTypes.STRING,
       answer: DataTypes.STRING(750),
       subject: DataTypes.STRING,
+      language: DataTypes.STRING,
     },
     {
       sequelize,

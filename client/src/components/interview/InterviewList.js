@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { basic } from "./dummydata";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBook, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faBook } from "@fortawesome/free-solid-svg-icons";
 import InterviewCard from "./InterviewCard";
-import {
-  FlashcardsBox,
-  CreateCardButton,
-  ModalBackdrop,
-  ModalView,
-} from "./styles";
+import Modal from "../common/Modal";
+import { FlashcardsBox, CreateCardButton } from "./styles";
 
 function InterviewList({ subject }) {
   const [data, setData] = useState([]);
@@ -23,8 +18,6 @@ function InterviewList({ subject }) {
 
   const textHandler = (e) => {
     const { name, value } = e.target;
-    console.log(name);
-    console.log(value);
     setQuestionAnswer({
       ...questionAnswer,
       [name]: value,
@@ -34,20 +27,12 @@ function InterviewList({ subject }) {
   return (
     <>
       {showModal ? (
-        <ModalBackdrop open={showModal}>
-          <ModalView>
-            <FontAwesomeIcon
-              icon={faCircleXmark}
-              className="close"
-              size="3x"
-              onClick={() => setShowModal(false)}
-            />
-            <div>Question</div>
-            <textarea name="question" onChange={textHandler}></textarea>
-            <div>Answer</div>
-            <textarea name="answer" onChange={textHandler}></textarea>
-          </ModalView>
-        </ModalBackdrop>
+        <Modal open={showModal} closeHandler={() => setShowModal(false)}>
+          <div>Question</div>
+          <textarea name="question" onChange={textHandler}></textarea>
+          <div>Answer</div>
+          <textarea name="answer" onChange={textHandler}></textarea>
+        </Modal>
       ) : null}
       <CreateCardButton>
         <span>New Flashcard</span>

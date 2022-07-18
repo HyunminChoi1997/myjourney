@@ -1,44 +1,46 @@
 import React, { useState } from "react";
 import Dropdown from "./Dropdown";
+import Sign from "./Sign";
 import { HeaderNav, HeaderFooterGridBox, NavLink, NavItem } from "./styles";
-import { interviewDropdown, algoDropdown } from "./dropdownData";
+import {
+  interviewDropdown,
+  programmingDropdown,
+  mathDropdown,
+} from "./dropdownData";
 
 function Header() {
   const [dropdown, setdropdown] = useState(false);
 
+  const mouseEnterHandler = () => setdropdown(true);
+  const mouseLeaveHandler = () => setdropdown(false);
+
   return (
-    <HeaderNav grid="6">
-      <HeaderFooterGridBox>
+    <HeaderNav
+      grid="6"
+      onMouseEnter={mouseEnterHandler}
+      onMouseLeave={mouseLeaveHandler}
+    >
+      <HeaderFooterGridBox onMouseEnter={mouseLeaveHandler}>
         <NavLink to="/">Home</NavLink>
       </HeaderFooterGridBox>
       <HeaderFooterGridBox />
-      <HeaderFooterGridBox
-        onMouseEnter={() => setdropdown(true)}
-        onMouseLeave={() => setdropdown(false)}
-      >
+      <HeaderFooterGridBox>
         <NavItem>Interview</NavItem>
         {dropdown && <Dropdown data={interviewDropdown} />}
       </HeaderFooterGridBox>
-      <HeaderFooterGridBox
-        onMouseEnter={() => setdropdown(true)}
-        onMouseLeave={() => setdropdown(false)}
-      >
-        <NavItem>Algorithm</NavItem>
-        {dropdown && <Dropdown data={algoDropdown} />}
+      <HeaderFooterGridBox>
+        <NavItem>Programming</NavItem>
+        {dropdown && <Dropdown data={programmingDropdown} />}
+      </HeaderFooterGridBox>
+      <HeaderFooterGridBox>
+        <NavItem>Math</NavItem>
+        {dropdown && <Dropdown data={mathDropdown} />}
       </HeaderFooterGridBox>
       <HeaderFooterGridBox
-        onMouseEnter={() => setdropdown(true)}
-        onMouseLeave={() => setdropdown(false)}
+        style={{ flexDirection: "row", justifyContent: "right", height: "6vh" }}
+        onMouseEnter={mouseLeaveHandler}
       >
-        <NavItem>Hello</NavItem>
-        {dropdown && <Dropdown data={[]} />}
-      </HeaderFooterGridBox>
-      <HeaderFooterGridBox
-        onMouseEnter={() => setdropdown(true)}
-        onMouseLeave={() => setdropdown(false)}
-      >
-        <NavItem>Hello</NavItem>
-        {dropdown && <Dropdown data={[]} />}
+        <Sign />
       </HeaderFooterGridBox>
     </HeaderNav>
   );

@@ -1,27 +1,12 @@
 "use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("interview", {
+    await queryInterface.createTable("memorized", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-      },
-      question: {
-        type: Sequelize.STRING,
-      },
-      answer: {
-        type: Sequelize.STRING(750),
-      },
-      subject: {
-        type: Sequelize.STRING,
-      },
-      language: {
-        type: Sequelize.STRING,
-      },
-      show: {
-        type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,
@@ -34,6 +19,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("interview");
+    await queryInterface.dropTable("memorized");
   },
 };

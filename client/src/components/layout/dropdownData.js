@@ -4,11 +4,17 @@ const interviewDropdown = [
   { id: 3, path: "/programming", title: "Programming" },
 ];
 
-const algoDropdown = [
-  { id: 1, path: "/java-algo", title: "Java" },
-  { id: 2, path: "/js-algo", title: "JavaScript" },
-  { id: 3, path: "/python-algo", title: "Python" },
-  { id: 4, path: "/basic-algo", title: "Theory" },
+const programmingDropdown = [
+  { id: 1, path: "/languages", title: "Programming Language" },
+  { id: 2, path: "/ai", title: "Artificial Intelligence" },
+  { id: 3, path: "/algorithm", title: "Algorithm" },
 ];
 
-export { interviewDropdown, algoDropdown };
+const mathDropdown = [
+  { id: 1, path: "/calculus", title: "Calculus" },
+  { id: 2, path: "/statistics", title: "Statistics" },
+  { id: 3, path: "/probability", title: "Probability" },
+  { id: 4, path: "/linear-algebra", title: "Liniear Algebra" },
+];
+
+export { interviewDropdown, programmingDropdown, mathDropdown };
