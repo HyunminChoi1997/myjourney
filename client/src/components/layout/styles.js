@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const HeaderNav = styled.nav`
-  height: 6vh;
+  height: 57px;
   background: #1b1919;
   color: white;
 
@@ -65,7 +65,6 @@ export const DropdownMenu = styled.ul`
 
   text-align: left;
 
-  display: relative;
   z-index: 1;
 
   &.clicked {
@@ -98,6 +97,7 @@ export const SignButton = styled.button`
   font-size: 1.3rem;
 
   width: 100px;
+  height: 46px;
   margin: 5px;
 
   &:hover {

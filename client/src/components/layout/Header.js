@@ -1,31 +1,18 @@
 import React, { useState } from "react";
 import Dropdown from "./Dropdown";
-import SignupForm from "../sign/SignupForm";
-import SigninForm from "../sign/SigninForm";
 import Sign from "./Sign";
-import { validateUser } from "../../requests/signRequest";
+import { HeaderNav, HeaderFooterGridBox, NavLink, NavItem } from "./styles";
 import {
-  HeaderNav,
-  HeaderFooterGridBox,
-  NavLink,
-  NavItem,
-  SignButton,
-} from "./styles";
-import { interviewDropdown, algoDropdown } from "./dropdownData";
+  interviewDropdown,
+  programmingDropdown,
+  mathDropdown,
+} from "./dropdownData";
 
 function Header() {
   const [dropdown, setdropdown] = useState(false);
-  const [signupModal, setSignupModal] = useState(false);
-  const [signinModal, setSigninModal] = useState(false);
 
   const mouseEnterHandler = () => setdropdown(true);
   const mouseLeaveHandler = () => setdropdown(false);
-
-  const { user, isLoading, isError } = validateUser();
-
-  console.log("isLoading : ", isLoading);
-  console.log("isError : ", isError);
-  console.log("user : ", user);
 
   return (
     <HeaderNav
@@ -42,38 +29,18 @@ function Header() {
         {dropdown && <Dropdown data={interviewDropdown} />}
       </HeaderFooterGridBox>
       <HeaderFooterGridBox>
-        <NavItem>Algorithm</NavItem>
-        {dropdown && <Dropdown data={algoDropdown} />}
+        <NavItem>Programming</NavItem>
+        {dropdown && <Dropdown data={programmingDropdown} />}
       </HeaderFooterGridBox>
       <HeaderFooterGridBox>
-        <NavItem>Hello</NavItem>
-        {dropdown && <Dropdown data={[]} />}
+        <NavItem>Math</NavItem>
+        {dropdown && <Dropdown data={mathDropdown} />}
       </HeaderFooterGridBox>
       <HeaderFooterGridBox
         style={{ flexDirection: "row", justifyContent: "right", height: "6vh" }}
         onMouseEnter={mouseLeaveHandler}
       >
-        <Sign user={user} />
-        {/* {user ? (
-          <SignButton>Signout</SignButton>
-        ) : (
-          <>
-            <SignButton onClick={() => setSigninModal(true)}>Signin</SignButton>
-            {signinModal && (
-              <SigninForm
-                open={signinModal}
-                closeHandler={() => setSigninModal(false)}
-              />
-            )}
-            <SignButton onClick={() => setSignupModal(true)}>Signup</SignButton>
-            {signupModal && (
-              <SignupForm
-                open={signupModal}
-                closeHandler={() => setSignupModal(false)}
-              />
-            )}
-          </>
-        )} */}
+        <Sign />
       </HeaderFooterGridBox>
     </HeaderNav>
   );

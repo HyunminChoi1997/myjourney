@@ -18,8 +18,6 @@ function InterviewList({ subject }) {
 
   const textHandler = (e) => {
     const { name, value } = e.target;
-    console.log(name);
-    console.log(value);
     setQuestionAnswer({
       ...questionAnswer,
       [name]: value,

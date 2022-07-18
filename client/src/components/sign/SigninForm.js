@@ -20,12 +20,11 @@ const SigninForm = (props) => {
   const submitHandler = async (values) => {
     try {
       const response = await signinRequest(values);
-      console.log(response.data);
       alert("Success");
       //!TODO : Change alert to sweetalert
       props.closeHandler();
     } catch (err) {
-      alert(err.response.data.message);
+      alert("Check your username and password");
       //!TODO : Change alert to sweetalert
       return;
     }

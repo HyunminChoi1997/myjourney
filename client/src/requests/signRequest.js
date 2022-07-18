@@ -4,12 +4,15 @@ import useSWR from "swr";
 const requestUrl = `${process.env.SERVER_URL}/user`;
 
 export const validateUser = () => {
-  const fetcher = (url) => {
-    return axios
-      .get(`${requestUrl}${url}`, {
+  const fetcher = async (url) => {
+    try {
+      const res = await axios.get(`${requestUrl}${url}`, {
         withCredentials: true,
-      })
-      .then((res) => res.data.userInfo);
+      });
+      return res?.data?.userInfo;
+    } catch (err) {
+      return null;
+    }
   };
 
   const { data, error } = useSWR("/sign", fetcher);
@@ -43,5 +46,9 @@ export const signinRequest = async ({ username, password }) => {
 };
 
 export const signoutRequest = async () => {
-  return await axios.post(`${requestUrl}/signout`, { withCredentials: true });
+  return await axios.post(
+    `${requestUrl}/signout`,
+    {},
+    { withCredentials: true }
+  );
 };

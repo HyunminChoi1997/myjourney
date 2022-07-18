@@ -1,14 +1,27 @@
 import React, { useState } from "react";
+import { useSWRConfig } from "swr";
+import { validateUser } from "../../requests/signRequest";
 import SignupForm from "../sign/SignupForm";
 import SigninForm from "../sign/SigninForm";
 import { signoutRequest } from "../../requests/signRequest";
 import { SignButton } from "./styles";
 
-function Sign({ user }) {
+function Sign() {
   const [signupModal, setSignupModal] = useState(false);
   const [signinModal, setSigninModal] = useState(false);
+
+  const { user, isLoading, isError } = validateUser();
+  const { mutate } = useSWRConfig();
+
+  console.log("user : ", user);
+
+  const logoutHandler = async () => {
+    await signoutRequest();
+    mutate("/sign");
+  };
+
   return user ? (
-    <SignButton onClick={signoutRequest}>Signout</SignButton>
+    <SignButton onClick={logoutHandler}>Signout</SignButton>
   ) : (
     <>
       <SignButton onClick={() => setSigninModal(true)}>Signin</SignButton>

@@ -5,16 +5,15 @@ const bcrpyt = require("bcrypt");
 
 module.exports = () => {
   passport.serializeUser(function (userInfo, cb) {
-    cb(null, { id: userInfo.id, username: userInfo.username });
+    cb(null, userInfo.id);
   });
 
-  passport.deserializeUser(function (userInfo, cb) {
+  passport.deserializeUser(async function (id, cb) {
     try {
-      user.findByPk(userInfo.id).then((res) => {
-        cb(null, res);
-      });
+      const result = await user.findByPk(id);
+      return cb(null, result);
     } catch (err) {
-      throw err;
+      cb(err);
     }
   });
 
