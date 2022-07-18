@@ -6,9 +6,13 @@ const requestUrl = `${process.env.SERVER_URL}/user`;
 export const validateUser = () => {
   const fetcher = async (url) => {
     try {
-      const res = await axios.get(`${requestUrl}${url}`, {
-        withCredentials: true,
-      });
+      const res = await axios.get(
+        `${requestUrl}${url}`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
       return res?.data?.userInfo;
     } catch (err) {
       return null;
