@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSWRConfig } from "swr";
-import { validateUser } from "../../requests/signRequest";
+import { validateUser } from "../../requests/userValidateRequest";
 import SignupForm from "./sign/SignupForm";
 import SigninForm from "./sign/SigninForm";
 import { signoutRequest } from "../../requests/signRequest";
@@ -15,7 +15,7 @@ function Sign() {
 
   const logoutHandler = async () => {
     await signoutRequest();
-    mutate("/sign");
+    mutate("sign");
   };
 
   return user ? (
@@ -23,9 +23,19 @@ function Sign() {
   ) : (
     <>
       <SignButton onClick={() => setSigninModal(true)}>Signin</SignButton>
-      {signinModal && <SigninForm open={signinModal} closeHandler={() => setSigninModal(false)} />}
+      {signinModal && (
+        <SigninForm
+          open={signinModal}
+          closeHandler={() => setSigninModal(false)}
+        />
+      )}
       <SignButton onClick={() => setSignupModal(true)}>Signup</SignButton>
-      {signupModal && <SignupForm open={signupModal} closeHandler={() => setSignupModal(false)} />}
+      {signupModal && (
+        <SignupForm
+          open={signupModal}
+          closeHandler={() => setSignupModal(false)}
+        />
+      )}
     </>
   );
 }

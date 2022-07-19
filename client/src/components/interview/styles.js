@@ -32,12 +32,10 @@ export const FlashcardsBox = styled.div`
 export const CreateCardButton = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  margin: 10px 0;
+  align-items: center;
 
   > span {
-    margin-bottom: 10px;
+    margin: 15px 0px;
     font-weight: bold;
   }
 `;
