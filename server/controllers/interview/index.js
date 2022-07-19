@@ -1,4 +1,4 @@
-const { interview, memorized } = require("../../models");
+const { user, interview, memorized } = require("../../models");
 
 function binarySearch(arr, target) {
   let start = 0;
@@ -24,7 +24,15 @@ module.exports = {
   getAll: async (req, res) => {
     try {
       const subject = req.params.subject;
-      const interviewList = await interview.findAll({ where: { subject } });
+      const interviewList = await interview.findAll({
+        include: [
+          {
+            model: user,
+            attributes: ["nickname"],
+          },
+        ],
+        where: { subject, show: true },
+      });
       return res.status(200).send({ interviewList });
     } catch (err) {
       return res.status(501).send({ err, message: "Something Went Wrong" });
@@ -35,7 +43,15 @@ module.exports = {
       const subject = req.params.subject;
       const user_id = req.user.id;
 
-      const interviewList = await interview.findAll({ where: { subject } });
+      const interviewList = await interview.findAll({
+        include: [
+          {
+            model: user,
+            attributes: ["nickname"],
+          },
+        ],
+        where: { subject, show: true },
+      });
       const memorizedList = await memorized.findAll({ where: { user_id } });
 
       const sortedMemorizedList = memorizedList.map((el) => el.interview_id);
@@ -59,13 +75,17 @@ module.exports = {
           {
             model: interview,
           },
+          {
+            model: user,
+            attributes: ["nickname"],
+          },
         ],
         where: { user_id },
       });
 
-      const interviewList = {
-        ...memorizedList.interview,
-      };
+      const interviewList = memorizedList.map((el) => {
+        return { ...el.user.dataValues, ...el.interview.dataValues };
+      });
 
       return res.status(200).send({ interviewList });
     } catch (err) {
@@ -73,10 +93,28 @@ module.exports = {
     }
   },
   post: async (req, res) => {
-    const subject = req.params.subject;
-    const { question, answer } = req.body;
-    const payload = { question, answer, subject };
+    try {
+      const subject = req.params.subject;
+      const { question, answer, language } = req.body;
+      const payload = { question, answer, subject, language, show: false, user_id: req.user.id };
+      if (req.user.position === "admin") {
+        payload.show = true;
+      }
+      const createdInfo = await interview.create(payload);
+      return res.status(201).send({ id: createdInfo.id });
+    } catch (err) {
+      return res.status(501).send({ err, message: "Something Went Wrong" });
+    }
+  },
+  postMemo: async (req, res) => {
+    try {
+      const user_id = req.user.id;
+      const { interview_id } = req.body;
 
-    return res.status(200).send(subject);
+      const createdInfo = await memorized.create({ user_id, interview_id });
+      return res.status(201).send({ id: createdInfo.id });
+    } catch (err) {
+      return res.status(501).send({ err, message: "Something Went Wrong" });
+    }
   },
 };

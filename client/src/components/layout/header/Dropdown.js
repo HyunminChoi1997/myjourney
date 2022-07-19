@@ -1,15 +1,11 @@
 import React, { useState } from "react";
-
-import { DropdownMenu, DropdownItem, LinkItem } from "./styles";
+import { DropdownMenu, DropdownItem, LinkItem } from "../styles";
 
 function Dropdown({ data }) {
   const [dropdown, setDropdown] = useState(true);
 
   return (
-    <DropdownMenu
-      className={dropdown ? "" : "clicked"}
-      onClick={() => setDropdown(!dropdown)}
-    >
+    <DropdownMenu className={dropdown ? "" : "clicked"} onClick={() => setDropdown(!dropdown)}>
       {data.map((item) => {
         return (
           <DropdownItem key={item.id}>

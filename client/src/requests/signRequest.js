@@ -2,24 +2,22 @@ import axios from "axios";
 import useSWR from "swr";
 
 const requestUrl = `${process.env.SERVER_URL}/user`;
+const request = axios.create({
+  withCredentials: true,
+  baseURL: requestUrl,
+});
+const fetcher = async (url) => {
+  try {
+    const res = await request.get(`${requestUrl}${url}`);
+    return res?.data?.userInfo;
+  } catch (err) {
+    return undefined;
+  }
+};
 
 export const validateUser = () => {
-  const fetcher = async (url) => {
-    try {
-      const res = await axios.get(
-        `${requestUrl}${url}`,
-        {},
-        {
-          withCredentials: true,
-        }
-      );
-      return res?.data?.userInfo;
-    } catch (err) {
-      return null;
-    }
-  };
-
   const { data, error } = useSWR("/sign", fetcher);
+  console.log(data);
 
   return {
     user: data,
@@ -29,7 +27,7 @@ export const validateUser = () => {
 };
 
 export const signupRequest = async ({ username, nickname, password }) => {
-  return await axios.post(`${requestUrl}/signup`, {
+  return await request.post("signup", {
     username,
     nickname,
     password,
@@ -37,22 +35,12 @@ export const signupRequest = async ({ username, nickname, password }) => {
 };
 
 export const signinRequest = async ({ username, password }) => {
-  return await axios.post(
-    `${requestUrl}/signin`,
-    {
-      username,
-      password,
-    },
-    {
-      withCredentials: true,
-    }
-  );
+  return await request.post("signin", {
+    username,
+    password,
+  });
 };
 
 export const signoutRequest = async () => {
-  return await axios.post(
-    `${requestUrl}/signout`,
-    {},
-    { withCredentials: true }
-  );
+  return await request.post("signout");
 };

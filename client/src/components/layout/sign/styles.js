@@ -12,7 +12,8 @@ export const TypeForm = styled.div`
     top: 110px;
   }
 
-  > #signForm {
+  > .signForm {
+    margin-top: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -42,7 +43,7 @@ export const InputField = styled.div`
   align-items: center;
 
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
 
   margin-bottom: 10px;
 

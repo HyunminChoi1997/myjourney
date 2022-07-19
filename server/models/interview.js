@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       answer: DataTypes.STRING(750),
       subject: DataTypes.STRING,
       language: DataTypes.STRING,
+      show: DataTypes.BOOLEAN,
     },
     {
       sequelize,

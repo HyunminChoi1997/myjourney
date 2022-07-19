@@ -17,4 +17,6 @@ const mathDropdown = [
   { id: 4, path: "/linear-algebra", title: "Liniear Algebra" },
 ];
 
-export { interviewDropdown, programmingDropdown, mathDropdown };
+const topics = ["Interview", "Programming", "Math"];
+
+export { interviewDropdown, programmingDropdown, mathDropdown, topics };

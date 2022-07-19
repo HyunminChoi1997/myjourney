@@ -1,19 +1,19 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import Modal from "../common/Modal";
-import { signupRequest } from "../../requests/signRequest";
+import Swal from "sweetalert2";
+import { useSWRConfig } from "swr";
+import Modal from "../../common/Modal";
+import { signinRequest } from "../../../requests/signRequest";
 import { InputField, TypeForm } from "./styles";
 
-const SignupForm = (props) => {
+const SigninForm = (props) => {
+  const { mutate } = useSWRConfig();
+
   const formikValidationSchema = Yup.object({
     username: Yup.string()
       .min(5, "Length : 5 ~ 15")
       .max(15, "Length : 5 ~ 15")
-      .required("Required"),
-    nickname: Yup.string()
-      .min(2, "Length : 2 ~ 15")
-      .max(15, "Length : 2 ~ 15")
       .required("Required"),
     password: Yup.string()
       .min(8, "Length : 8 ~ 20")
@@ -23,39 +23,35 @@ const SignupForm = (props) => {
 
   const submitHandler = async (values) => {
     try {
-      await signupRequest(values);
-      alert("Success");
-      //!TODO : Change alert to sweetalert
+      await signinRequest(values);
+      Swal.fire("Success", "로그인 성공", "success");
+      mutate("/sign");
       props.closeHandler();
     } catch (err) {
-      alert(err.response.data.message);
-      //!TODO : Change alert to sweetalert
-      return;
+      return Swal.fire(
+        "Check your username and password",
+        "아이디와 비밀번호를 확인해주세요",
+        "error"
+      );
     }
   };
 
   return (
     <Modal open={props.open} closeHandler={props.closeHandler}>
       <TypeForm>
-        <h1>Signup</h1>
+        <h1>Signin</h1>
         <Formik
-          initialValues={{ username: "", nickname: "", password: "" }}
+          initialValues={{ username: "", password: "" }}
           validationSchema={formikValidationSchema}
           onSubmit={(values) => {
             submitHandler(values);
           }}
         >
-          <Form id="signForm">
+          <Form className="signForm">
             <InputField>
               <label htmlFor="username">Username</label>
               <Field name="username" type="text" />
               <ErrorMessage component="div" name="username" />
-            </InputField>
-
-            <InputField>
-              <label htmlFor="nickname">Nickname</label>
-              <Field name="nickname" type="text" />
-              <ErrorMessage component="div" name="nickname" />
             </InputField>
 
             <InputField>
@@ -72,4 +68,4 @@ const SignupForm = (props) => {
   );
 };
 
-export default SignupForm;
+export default SigninForm;
