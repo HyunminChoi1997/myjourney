@@ -13,8 +13,8 @@ export default function Routers() {
       <Route path="/programming" element={<Interview />} />\
       <Route path="/languages" element={<Home />} />
       <Route path="/ai" element={<Home />} />
-      <Route path="/algorithms" element={<Home />} />
-      <Route path="/ca;culus" element={<Home />} />
+      <Route path="/algorithm" element={<Home />} />
+      <Route path="/calculus" element={<Home />} />
       <Route path="/statistics" element={<Home />} />
       <Route path="/probability" element={<Home />} />
       <Route path="/linear-algebra" element={<Home />} />

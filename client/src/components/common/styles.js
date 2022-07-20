@@ -8,6 +8,7 @@ export const ModalBackdrop = styled.div`
   height: 100%;
 
   display: ${(props) => (props.open ? "flex" : "none")};
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: rgba(220, 220, 220, 0.5);

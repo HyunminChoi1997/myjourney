@@ -1,11 +1,15 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import Modal from "../common/Modal";
-import { signinRequest } from "../../requests/signRequest";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import Modal from "../../common/Modal";
+import { signinRequest } from "../../../requests/signRequest";
 import { InputField, TypeForm } from "./styles";
 
 const SigninForm = (props) => {
+  const navigate = useNavigate();
+
   const formikValidationSchema = Yup.object({
     username: Yup.string()
       .min(5, "Length : 5 ~ 15")
@@ -19,14 +23,17 @@ const SigninForm = (props) => {
 
   const submitHandler = async (values) => {
     try {
-      const response = await signinRequest(values);
-      alert("Success");
-      //!TODO : Change alert to sweetalert
+      await signinRequest(values);
+      Swal.fire("Success", "로그인 성공", "success");
+      props.revalidate();
       props.closeHandler();
+      navigate("/");
     } catch (err) {
-      alert("Check your username and password");
-      //!TODO : Change alert to sweetalert
-      return;
+      return Swal.fire(
+        "Check your username and password",
+        "아이디와 비밀번호를 확인해주세요",
+        "error"
+      );
     }
   };
 
@@ -41,7 +48,7 @@ const SigninForm = (props) => {
             submitHandler(values);
           }}
         >
-          <Form id="signForm">
+          <Form className="signForm">
             <InputField>
               <label htmlFor="username">Username</label>
               <Field name="username" type="text" />

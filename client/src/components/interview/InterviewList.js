@@ -1,50 +1,54 @@
 import React, { useState, useEffect } from "react";
-import { basic } from "./dummydata";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBook } from "@fortawesome/free-solid-svg-icons";
+import CardPost from "./CardPost";
 import InterviewCard from "./InterviewCard";
-import Modal from "../common/Modal";
-import { FlashcardsBox, CreateCardButton } from "./styles";
+import { getAllInterview } from "../../requests/interviewRequest";
+import { FlashcardsBox, ToggleContainer, Desc, LoadingContainer } from "./styles";
 
 function InterviewList({ subject }) {
   const [data, setData] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [questionAnswer, setQuestionAnswer] = useState({
-    question: "",
-    answer: "",
-  });
+  const [language, setLanguage] = useState("KR");
+  const [isOn, setisOn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [action, setAction] = useState(false);
 
-  // useEffect(() => {});
-
-  const textHandler = (e) => {
-    const { name, value } = e.target;
-    setQuestionAnswer({
-      ...questionAnswer,
-      [name]: value,
+  useEffect(() => {
+    setIsLoading(true);
+    getAllInterview(subject, language).then((res) => {
+      setData(res);
+      setIsLoading(false);
     });
+  }, [subject, action, language]);
+
+  const actionDetector = () => {
+    setAction(!action);
   };
 
-  return (
+  const toggleHandler = () => {
+    setisOn(!isOn);
+    setLanguage(language === "KR" ? "EN" : "KR");
+  };
+
+  return isLoading ? (
+    <LoadingContainer>Loading 로딩</LoadingContainer>
+  ) : (
     <>
-      {showModal ? (
-        <Modal open={showModal} closeHandler={() => setShowModal(false)}>
-          <div>Question</div>
-          <textarea name="question" onChange={textHandler}></textarea>
-          <div>Answer</div>
-          <textarea name="answer" onChange={textHandler}></textarea>
-        </Modal>
-      ) : null}
-      <CreateCardButton>
-        <span>New Flashcard</span>
-        <FontAwesomeIcon
-          icon={faBook}
-          size="5x"
-          onClick={() => setShowModal(true)}
-        />
-      </CreateCardButton>
+      <CardPost actionDetector={actionDetector} subject={subject} />
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <Desc>Language : {language}</Desc>
+        <ToggleContainer>
+          <div
+            onClick={toggleHandler}
+            className={`toggle-container ${isOn ? "toggle--checked" : ""}`}
+          />
+          <div
+            onClick={toggleHandler}
+            className={`toggle-circle ${isOn ? "toggle--checked" : ""}`}
+          />
+        </ToggleContainer>
+      </div>
       <FlashcardsBox>
-        {basic.map((el) => {
-          return <InterviewCard key={el.id} data={el} />;
+        {data.map((el) => {
+          return <InterviewCard key={el.id} data={el} actionDetector={actionDetector} />;
         })}
       </FlashcardsBox>
     </>

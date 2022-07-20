@@ -42,10 +42,7 @@ module.exports = () => {
           });
         }
 
-        const passwordVerify = await bcrpyt.compare(
-          password,
-          userInfo.password
-        );
+        const passwordVerify = await bcrpyt.compare(password, userInfo.password);
 
         if (!passwordVerify) {
           return cb(null, false, {

@@ -1,12 +1,12 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
 import Routes from "./routes";
+import { validateUser } from "./requests/userValidateRequest";
 import "./App.css";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <BrowserRouter>
-    <Routes />
-  </BrowserRouter>
-);
+function App() {
+  const { user, isLoading, isError } = validateUser();
+
+  return <Routes />;
+}
+
+export default App;
