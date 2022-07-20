@@ -8,6 +8,7 @@ const request = axios.create({
 });
 
 const fetcher = async (url) => {
+  console.log("Revalidate");
   try {
     const res = await request.get(`${url}`);
     return res?.data?.userInfo;
@@ -17,8 +18,12 @@ const fetcher = async (url) => {
 };
 
 export const validateUser = () => {
-  const { data, error } = useSWR("sign", fetcher);
-  console.log(data);
+  const { data, error } = useSWR("sign", fetcher, {
+    // refreshInterval: 60000,
+    // revalidateIfStale: false,
+    // revalidateOnFocus: false,
+    // revalidateOnReconnect: false,
+  });
 
   return {
     user: data,

@@ -1,30 +1,54 @@
 import React, { useState, useEffect } from "react";
-import { basic } from "./dummydata";
 import CardPost from "./CardPost";
 import InterviewCard from "./InterviewCard";
 import { getAllInterview } from "../../requests/interviewRequest";
-import { FlashcardsBox } from "./styles";
+import { FlashcardsBox, ToggleContainer, Desc, LoadingContainer } from "./styles";
 
 function InterviewList({ subject }) {
   const [data, setData] = useState([]);
+  const [language, setLanguage] = useState("KR");
+  const [isOn, setisOn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [action, setAction] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    getAllInterview(subject, language).then((res) => {
+      setData(res);
+      setIsLoading(false);
+    });
+  }, [subject, action, language]);
 
   const actionDetector = () => {
     setAction(!action);
   };
 
-  useEffect(() => {
-    getAllInterview(subject).then((res) => {
-      setData(res);
-    });
-  }, [action]);
+  const toggleHandler = () => {
+    setisOn(!isOn);
+    setLanguage(language === "KR" ? "EN" : "KR");
+  };
 
-  return (
+  return isLoading ? (
+    <LoadingContainer>Loading 로딩</LoadingContainer>
+  ) : (
     <>
-      <CardPost actionDetector={actionDetector} />
+      <CardPost actionDetector={actionDetector} subject={subject} />
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <Desc>Language : {language}</Desc>
+        <ToggleContainer>
+          <div
+            onClick={toggleHandler}
+            className={`toggle-container ${isOn ? "toggle--checked" : ""}`}
+          />
+          <div
+            onClick={toggleHandler}
+            className={`toggle-circle ${isOn ? "toggle--checked" : ""}`}
+          />
+        </ToggleContainer>
+      </div>
       <FlashcardsBox>
-        {basic.map((el) => {
-          return <InterviewCard key={el.id} data={el} />;
+        {data.map((el) => {
+          return <InterviewCard key={el.id} data={el} actionDetector={actionDetector} />;
         })}
       </FlashcardsBox>
     </>

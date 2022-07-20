@@ -1,5 +1,4 @@
 import axios from "axios";
-import useSWR from "swr";
 
 const requestUrl = `${process.env.SERVER_URL}/interview`;
 const request = axios.create({
@@ -7,7 +6,15 @@ const request = axios.create({
   baseURL: requestUrl,
 });
 
-export const getAllInterview = async (subject) => {
-  const response = await request.get(`/${subject}/all`);
+export const getAllInterview = async (subject, language) => {
+  const response = await request.get(`/${subject}/all/${language}`);
   return response.data.interviewList;
+};
+
+export const postInterview = async (question, answer, language, subject) => {
+  return await request.post(`/${subject}`, { question, answer, language });
+};
+
+export const postMemoInterview = async (interview_id) => {
+  return await request.post("/memo", { interview_id });
 };

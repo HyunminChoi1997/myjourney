@@ -22,20 +22,49 @@ function binarySearch(arr, target) {
 
 module.exports = {
   getAll: async (req, res) => {
-    try {
-      const subject = req.params.subject;
-      const interviewList = await interview.findAll({
-        include: [
-          {
-            model: user,
-            attributes: ["nickname"],
-          },
-        ],
-        where: { subject, show: true },
-      });
-      return res.status(200).send({ interviewList });
-    } catch (err) {
-      return res.status(501).send({ err, message: "Something Went Wrong" });
+    if (req.user) {
+      try {
+        const { subject, language } = req.params;
+        const user_id = req.user.id;
+
+        const interviewList = await interview.findAll({
+          include: [
+            {
+              model: user,
+              attributes: ["nickname"],
+            },
+          ],
+          where: { subject, show: true, language },
+        });
+        const memorizedList = await memorized.findAll({ where: { user_id } });
+
+        const sortedMemorizedList = memorizedList.map((el) => el.interview_id);
+        sortedMemorizedList.sort((a, b) => a - b);
+
+        const filteredInterviewList = interviewList.filter(
+          (el) => binarySearch(sortedMemorizedList, el.id) == -1
+        );
+
+        return res.status(200).send({ interviewList: filteredInterviewList });
+      } catch (err) {
+        return res.status(501).send({ err, message: "Something Went Wrong" });
+      }
+    } else {
+      try {
+        const { subject, language } = req.params;
+        const interviewList = await interview.findAll({
+          include: [
+            {
+              model: user,
+              attributes: ["nickname"],
+            },
+          ],
+          where: { subject, show: true, language },
+        });
+        return res.status(200).send({ interviewList });
+      } catch (err) {
+        return res.status(501).send({ err, message: "Something Went Wrong" });
+      }
     }
   },
   getNomemo: async (req, res) => {
@@ -84,7 +113,7 @@ module.exports = {
       });
 
       const interviewList = memorizedList.map((el) => {
-        return { ...el.user.dataValues, ...el.interview.dataValues };
+        return { ...el.interview.dataValues, user: el.user.dataValues };
       });
 
       return res.status(200).send({ interviewList });

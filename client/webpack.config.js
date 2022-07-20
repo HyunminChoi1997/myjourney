@@ -5,7 +5,7 @@ dotenv.config();
 
 module.exports = (env) => {
   return {
-    entry: "./src/App.js",
+    entry: "./src/index.js",
     mode: env.mode,
     output: {
       filename: "index_output.js",

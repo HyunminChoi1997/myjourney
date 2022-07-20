@@ -14,11 +14,7 @@ passportStrategy();
 app.use(express.json());
 app.use(
   cors({
-    origin: [
-      "https://www.fatfobcodes.ml",
-      "https://fatfobcodes.ml",
-      "http://localhost:7000",
-    ],
+    origin: ["https://www.fatfobcodes.ml", "https://fatfobcodes.ml", "http://localhost:7000"],
     credentials: true,
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
   })
@@ -31,6 +27,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
+      maxAge: 3600000,
       // secure: true //Https protocol
     },
   })

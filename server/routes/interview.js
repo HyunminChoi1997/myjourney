@@ -3,9 +3,9 @@ const router = express.Router();
 const { loginVerify } = require("./loginVerify");
 const interviewControllers = require("../controllers/interview");
 
-router.get("/:subject/all", interviewControllers.getAll);
-router.get("/:subject/nomemo", loginVerify, interviewControllers.getNomemo);
-router.get("/memo", loginVerify, interviewControllers.getMemo);
+router.get("/:subject/all/:language", interviewControllers.getAll);
+router.get("/:subject/nomemo/:language", loginVerify, interviewControllers.getNomemo);
+router.get("/memo/:language", loginVerify, interviewControllers.getMemo);
 
 router.post("/memo", loginVerify, interviewControllers.postMemo);
 router.post("/:subject", loginVerify, interviewControllers.post);
@@ -14,7 +14,6 @@ module.exports = router;
 
 /**
  * Response Data Format to GET Requests
- * Only diff with get("/post"). The object is flat without "user" key
  * {
     "interviewList": [
         {

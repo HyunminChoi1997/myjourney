@@ -2,13 +2,13 @@ import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
-import { useSWRConfig } from "swr";
+import { useNavigate } from "react-router-dom";
 import Modal from "../../common/Modal";
 import { signinRequest } from "../../../requests/signRequest";
 import { InputField, TypeForm } from "./styles";
 
 const SigninForm = (props) => {
-  const { mutate } = useSWRConfig();
+  const navigate = useNavigate();
 
   const formikValidationSchema = Yup.object({
     username: Yup.string()
@@ -25,8 +25,9 @@ const SigninForm = (props) => {
     try {
       await signinRequest(values);
       Swal.fire("Success", "로그인 성공", "success");
-      mutate("/sign");
+      props.revalidate();
       props.closeHandler();
+      navigate("/");
     } catch (err) {
       return Swal.fire(
         "Check your username and password",
