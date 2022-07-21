@@ -19,19 +19,24 @@ app.use(
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
   })
 );
-app.use(
-  session({
-    name: "sessionID",
-    secret: process.env.SC_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      maxAge: 3600000,
-      // secure: true //Https protocol
-    },
-  })
-);
+const sessionOptions = {
+  name: "sessionID",
+  secret: process.env.SC_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    maxAge: 3600000,
+  },
+};
+
+if (process.env.DEPLOY) {
+  app.set("trust proxy", 1);
+  sessionOptions.cookie.secure = true;
+  sessionOptions.cookie.sameSite = "none";
+}
+
+app.use(session(sessionOptions));
 app.use(passport.initialize());
 app.use(passport.session());
 
