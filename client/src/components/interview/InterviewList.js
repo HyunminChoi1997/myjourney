@@ -13,10 +13,9 @@ function InterviewList({ subject }) {
 
   useEffect(() => {
     setIsLoading(true);
-    getAllInterview(subject, language).then((res) => {
-      setData(res);
-      setIsLoading(false);
-    });
+    getAllInterview(subject, language)
+      .then((res) => setData(res))
+      .then(() => setIsLoading(false));
   }, [subject, action, language]);
 
   const actionDetector = () => {

@@ -31,18 +31,22 @@ function InterviewCard({ data, actionDetector }) {
 
   return clicked ? (
     <Flashcard className="answer" onClick={() => setClicked(!clicked)}>
-      <Creator>작성자: {data.user.nickname}</Creator>
+      <Creator>
+        {data.language === "KR" ? "작성자" : "Creator"}: {data.user.nickname}
+      </Creator>
       <FlashcardContent>
         <div className="answertitle">A.</div>
-        <div>{data?.answer}</div>
+        <div>{data.answer}</div>
       </FlashcardContent>
     </Flashcard>
   ) : (
     <Flashcard className="question" onClick={() => setClicked(!clicked)}>
-      <Creator>작성자: {data.user.nickname}</Creator>
+      <Creator>
+        {data.language === "KR" ? "작성자" : "Creator"}: {data.user.nickname}
+      </Creator>
       <FlashcardContent between={true}>
         <div className="questiontitle">Q.</div>
-        <div>{data?.question}</div>
+        <div>{data.question}</div>
         {user ? (
           <MemoButton onClick={(e) => memoClickHandler(e)}>Memorized 외움</MemoButton>
         ) : (
