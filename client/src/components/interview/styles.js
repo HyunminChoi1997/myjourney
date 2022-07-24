@@ -14,6 +14,7 @@ export const Flashcard = styled.div`
 export const FlashcardContent = styled.div`
   width: 600px;
   height: 250px;
+  font-size: 0.8rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,7 +36,9 @@ export const FlashcardsBox = styled.div`
   justify-content: space-around;
 `;
 
-export const Creator = styled.div``;
+export const Creator = styled.div`
+  font-size: 0.5rem;
+`;
 
 export const MemoButton = styled.button`
   width: 150px;

@@ -12,8 +12,8 @@ function InterviewCard({ data, actionDetector }) {
   const memoClickHandler = async (e) => {
     e.stopPropagation();
     Swal.fire({
-      title: "You can check memorized list in mypage",
-      text: "외우신 목록은 마이페이지에서 확인 가능합니다",
+      title: "You can check memorized list in mypage (Not Implemented Yet)",
+      text: "외우신 목록은 마이페이지에서 확인 가능합니다 (미구현)",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -48,7 +48,9 @@ function InterviewCard({ data, actionDetector }) {
         <div className="questiontitle">Q.</div>
         <div>{data.question}</div>
         {user ? (
-          <MemoButton onClick={(e) => memoClickHandler(e)}>Memorized 외움</MemoButton>
+          <MemoButton onClick={(e) => memoClickHandler(e)}>
+            Memorized 외움
+          </MemoButton>
         ) : (
           <div />
         )}
