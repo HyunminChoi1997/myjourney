@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { $getRoot, $getSelection } from "lexical";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $generateNodesFromDOM } from "@lexical/html";
@@ -53,6 +53,8 @@ const editorConfig = {
 
 function CallHTMLPlugin() {
   const [editor] = useLexicalComposerContext();
+  //보여줄때는 HTML로 보여주고
+
   // const htmlString = `<code class="editor-code" spellcheck="false" data-highlight-language="javascript"><span>asfdasdfsdafaf</span></code><p class="editor-paragraph"><span>asdfasdfsdaf</span></p><p class="editor-paragraph"><span>sdafasdfdfsdaf</span></p><h1 class="editor-heading-h1"><span>asfsafd</span></h1>`;
 
   // const onClick = () => {
@@ -72,14 +74,12 @@ function CallHTMLPlugin() {
   //     selection.insertNodes(nodes);
   //   });
   // };
+
+  //Text 수정할때는 json으로 불러오고
   const json = `{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"for","type":"code-highlight","version":1,"highlightType":"keyword"}],"direction":"ltr","format":"","indent":0,"type":"code","version":1,"language":"javascript"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}`;
   const parsedJson = JSON.parse(json);
-
-  const onClick = () => {
-    const state = editor.parseEditorState(json);
-    editor.setEditorState(state);
-  };
-  return <button onClick={onClick}>Submit</button>;
+  const state = editor.parseEditorState(json);
+  editor.setEditorState(state);
 }
 
 function EditEditor() {
@@ -105,6 +105,7 @@ function EditEditor() {
               placeholder={<Placeholder />}
             />
             <OnChangePlugin onChange={onChange} />
+            <CallHTMLPlugin />
             <HistoryPlugin />
             <AutoFocusPlugin />
             <CodeHighlightPlugin />
@@ -114,7 +115,6 @@ function EditEditor() {
             <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
           </div>
         </div>
-        <CallHTMLPlugin />
       </LexicalComposer>
     </>
   );

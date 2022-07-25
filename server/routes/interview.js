@@ -4,13 +4,25 @@ const { loginVerify } = require("./loginVerify");
 const interviewControllers = require("../controllers/interview");
 
 router.get("/:subject/all/:language", interviewControllers.getAll);
-router.get("/:subject/nomemo/:language", loginVerify, interviewControllers.getNomemo);
+router.get(
+  "/:subject/nomemo/:language",
+  loginVerify,
+  interviewControllers.getNomemo
+);
 router.get("/memo/:language", loginVerify, interviewControllers.getMemo);
 
 router.post("/memo", loginVerify, interviewControllers.postMemo);
 router.post("/:subject", loginVerify, interviewControllers.post);
 
 module.exports = router;
+
+/**
+ * post("/memo")
+ * body : interview_id : number
+ *
+ * post("/:subject")
+ * body: question: string, answer: string, language: string,
+ */
 
 /**
  * Response Data Format to GET Requests

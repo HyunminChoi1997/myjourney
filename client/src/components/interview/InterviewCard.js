@@ -32,7 +32,7 @@ function InterviewCard({ data, actionDetector }) {
   return clicked ? (
     <Flashcard className="answer" onClick={() => setClicked(!clicked)}>
       <Creator>
-        {data.language === "KR" ? "작성자" : "Creator"}: {data.user.nickname}
+        {data.language === "KR" ? "작성자" : "Created By"}: {data.user.nickname}
       </Creator>
       <FlashcardContent>
         <div className="answertitle">A.</div>
@@ -42,7 +42,7 @@ function InterviewCard({ data, actionDetector }) {
   ) : (
     <Flashcard className="question" onClick={() => setClicked(!clicked)}>
       <Creator>
-        {data.language === "KR" ? "작성자" : "Creator"}: {data.user.nickname}
+        {data.language === "KR" ? "작성자" : "Created By"}: {data.user.nickname}
       </Creator>
       <FlashcardContent between={true}>
         <div className="questiontitle">Q.</div>

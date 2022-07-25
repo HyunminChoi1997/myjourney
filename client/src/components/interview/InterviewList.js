@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import CardPost from "./CardPost";
 import InterviewCard from "./InterviewCard";
 import { getAllInterview } from "../../requests/interviewRequest";
-import { FlashcardsBox, ToggleContainer, Desc, LoadingContainer } from "./styles";
+import {
+  FlashcardsBox,
+  ToggleContainer,
+  Desc,
+  LoadingContainer,
+} from "./styles";
 
 function InterviewList({ subject }) {
   const [data, setData] = useState([]);
@@ -32,7 +37,13 @@ function InterviewList({ subject }) {
   ) : (
     <>
       <CardPost actionDetector={actionDetector} subject={subject} />
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <Desc>Language : {language}</Desc>
         <ToggleContainer>
           <div
@@ -47,7 +58,13 @@ function InterviewList({ subject }) {
       </div>
       <FlashcardsBox>
         {data.map((el) => {
-          return <InterviewCard key={el.id} data={el} actionDetector={actionDetector} />;
+          return (
+            <InterviewCard
+              key={el.id}
+              data={el}
+              actionDetector={actionDetector}
+            />
+          );
         })}
       </FlashcardsBox>
     </>

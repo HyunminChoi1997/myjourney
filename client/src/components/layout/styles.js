@@ -73,7 +73,7 @@ export const DropdownMenu = styled.ul`
 `;
 
 export const DropdownItem = styled.li`
-  background: white;
+  background: rgb(245, 235, 223);
   cursor: pointer;
   font-size: 1rem;
 

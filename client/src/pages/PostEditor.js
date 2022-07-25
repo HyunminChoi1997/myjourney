@@ -6,7 +6,9 @@ import "./PostEditor.css";
 function PostEditor() {
   return (
     <Layout>
-      <Editor />
+      <div className="EditorBody">
+        <Editor />
+      </div>
     </Layout>
   );
 }

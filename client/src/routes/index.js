@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Home from "../pages/Home";
 import Interview from "../pages/Interview";
+import BlogPost from "../pages/BlogPost";
 import PostEditEditor from "../pages/PostEditEditor";
 import PostEditor from "../pages/PostEditor";
 
@@ -15,7 +16,7 @@ export default function Routers() {
       <Route path="/programming" element={<Interview />} />
       <Route path="/languages" element={<PostEditor />} />
       <Route path="/ai" element={<PostEditEditor />} />
-      <Route path="/algorithm" element={<Home />} />
+      <Route path="/algorithm" element={<BlogPost />} />
       <Route path="/calculus" element={<Home />} />
       <Route path="/statistics" element={<Home />} />
       <Route path="/probability" element={<Home />} />

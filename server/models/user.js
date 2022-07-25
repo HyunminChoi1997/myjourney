@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "user_id",
         sourceKey: "id",
       });
+      user.hasMany(models.progblog, {
+        foreignKey: "user_id",
+        sourceKey: "id",
+      });
     }
   }
   user.init(

@@ -125,12 +125,21 @@ module.exports = {
     try {
       const subject = req.params.subject;
       const { question, answer, language } = req.body;
-      const payload = { question, answer, subject, language, show: false, user_id: req.user.id };
+      const payload = {
+        question,
+        answer,
+        subject,
+        language,
+        show: false,
+        user_id: req.user.id,
+      };
       if (req.user.position === "admin") {
         payload.show = true;
       }
       const createdInfo = await interview.create(payload);
-      return res.status(201).send({ id: createdInfo.id });
+      return res
+        .status(201)
+        .send({ id: createdInfo.id, message: "Successfully Created" });
     } catch (err) {
       return res.status(501).send({ err, message: "Something Went Wrong" });
     }
