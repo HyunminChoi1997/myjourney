@@ -19,7 +19,12 @@ function InterviewList({ subject }) {
   useEffect(() => {
     setIsLoading(true);
     getAllInterview(subject, language)
-      .then((res) => setData(res))
+      .then((res) => {
+        if (res.err) {
+          return Swal.fire("Error", res.err, "error");
+        }
+        setData(res.interviewList);
+      })
       .then(() => setIsLoading(false));
   }, [subject, action, language]);
 

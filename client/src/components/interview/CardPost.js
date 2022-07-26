@@ -4,7 +4,13 @@ import { faBook, faLayerGroup } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import { postInterview } from "../../requests/interviewRequest";
 import Modal from "../common/Modal";
-import { CreateCardButton, QATextArea, ToggleContainer, Desc, Warning } from "./styles";
+import {
+  CreateCardButton,
+  QATextArea,
+  ToggleContainer,
+  Desc,
+  Warning,
+} from "./styles";
 import { useSWRConfig } from "swr";
 
 function CardPost({ actionDetector, subject }) {
@@ -45,9 +51,17 @@ function CardPost({ actionDetector, subject }) {
     const Q = questionAnswer.question;
     const A = questionAnswer.answer;
     if (Q.length >= 255) {
-      return Swal.fire("Question is too long ( <= 255 )", "질문이 너무 길어요 ( <= 255 )", "error");
+      return Swal.fire(
+        "Question is too long ( <= 255 )",
+        "질문이 너무 길어요 ( <= 255 )",
+        "error"
+      );
     } else if (A.length >= 750) {
-      return Swal.fire("Answer is too long ( <= 750 )", "답변이 너무 길어요 ( <= 750 )", "error");
+      return Swal.fire(
+        "Answer is too long ( <= 750 )",
+        "답변이 너무 길어요 ( <= 750 )",
+        "error"
+      );
     }
 
     return Swal.fire({
@@ -61,7 +75,10 @@ function CardPost({ actionDetector, subject }) {
       cancelButtonText: "Not yet",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await postInterview(Q, A, language, subject);
+        const res = await postInterview(Q, A, language, subject);
+        if (res.err) {
+          return Swal.fire("Error", res.err, "error");
+        }
         Swal.fire("Good! Thank you", "좋습니다! 감사합니다", "success");
         actionDetector();
         setShowModal(false);
@@ -90,13 +107,26 @@ function CardPost({ actionDetector, subject }) {
             />
           </ToggleContainer>
 
-          <FontAwesomeIcon icon={faLayerGroup} size="3x" onClick={submitHandler} />
-          <Warning>The card will be posted once the content is confirmed appropriate</Warning>
-          <Warning>부적절한 컨텐트인지 확인한 후에 새로운 카드가 추가됩니다</Warning>
+          <FontAwesomeIcon
+            icon={faLayerGroup}
+            size="3x"
+            onClick={submitHandler}
+          />
+          <Warning>
+            The card will be posted once the content is confirmed appropriate
+          </Warning>
+          <Warning>
+            부적절한 컨텐트인지 확인한 후에 새로운 카드가 추가됩니다
+          </Warning>
         </Modal>
       ) : null}
       <span>New Flashcard</span>
-      <FontAwesomeIcon icon={faBook} size="5x" onClick={modalOpenHandler} />
+      <FontAwesomeIcon
+        className="postbutton"
+        icon={faBook}
+        size="5x"
+        onClick={modalOpenHandler}
+      />
     </CreateCardButton>
   );
 }

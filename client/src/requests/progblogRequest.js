@@ -8,7 +8,7 @@ const request = axios.create({
 
 export const getBlogPost = async (subject) => {
   const response = await request.get(`/${subject}`);
-  return response.data.blogList;
+  return response.data;
 };
 
 export const postBlogPost = async (title, stateJson, stateHTML, subject) => {

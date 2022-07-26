@@ -1,5 +1,6 @@
 .EditorBody {
-  margin: 0;
+  margin: 0px;
+  padding-top: 10px;
   background: #eee;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, ".SFNSText-Regular",
     sans-serif;

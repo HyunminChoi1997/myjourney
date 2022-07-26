@@ -2,13 +2,57 @@ import styled from "styled-components";
 import krflag from "../../images/krflag.png";
 import usflag from "../../images/usflag.png";
 
+// export const Flashcard = styled.div`
+//   width: 600px;
+//   height: 250px;
+//   border: 2px solid black;
+//   margin: 20px;
+//   padding: 15px;
+//   border-radius: 20px;
+// `;
+
 export const Flashcard = styled.div`
-  width: 600px;
-  height: 250px;
+  width: 650px;
+  height: 300px;
+  margin: 40px 20px;
+`;
+
+export const FlashcardInner = styled.div`
+  width: 100%;
+  height: 100%;
   border: 2px solid black;
-  margin: 20px;
-  padding: 15px;
   border-radius: 20px;
+  padding: 10px;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  position: relative;
+
+  &.flipped {
+    transform: rotateY(180deg);
+  }
+`;
+
+export const Cardface = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &.front {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.back {
+    transform: rotateY(180deg);
+  }
 `;
 
 export const FlashcardContent = styled.div`
@@ -53,6 +97,12 @@ export const CreateCardButton = styled.div`
   > span {
     margin: 15px 0px;
     font-weight: bold;
+  }
+
+  > .postbutton {
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 

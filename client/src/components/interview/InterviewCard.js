@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { useSWRConfig } from "swr";
 import { postMemoInterview } from "../../requests/interviewRequest";
-import { Flashcard, Creator, FlashcardContent, MemoButton } from "./styles";
+import {
+  Flashcard,
+  Creator,
+  FlashcardContent,
+  MemoButton,
+  FlashcardInner,
+  Cardface,
+} from "./styles";
 
 function InterviewCard({ data, actionDetector }) {
   const [clicked, setClicked] = useState(false);
@@ -29,6 +36,42 @@ function InterviewCard({ data, actionDetector }) {
     });
   };
 
+  return (
+    <Flashcard>
+      <FlashcardInner
+        className={clicked ? "flipped" : ""}
+        onClick={() => setClicked(!clicked)}
+      >
+        <Cardface className="front">
+          <Creator>
+            {data.language === "KR" ? "작성자" : "Created By"}:{" "}
+            {data.user.nickname}
+          </Creator>
+          <FlashcardContent between={true}>
+            <div className="questiontitle">Q.</div>
+            <div>{data.question}</div>
+            {user ? (
+              <MemoButton onClick={(e) => memoClickHandler(e)}>
+                Memorized 외움
+              </MemoButton>
+            ) : (
+              <div />
+            )}
+          </FlashcardContent>
+        </Cardface>
+        <Cardface className="back">
+          <Creator>
+            {data.language === "KR" ? "작성자" : "Created By"}:{" "}
+            {data.user.nickname}
+          </Creator>
+          <FlashcardContent>
+            <div className="answertitle">A.</div>
+            <div>{data.answer}</div>
+          </FlashcardContent>
+        </Cardface>
+      </FlashcardInner>
+    </Flashcard>
+  );
   return clicked ? (
     <Flashcard className="answer" onClick={() => setClicked(!clicked)}>
       <Creator>

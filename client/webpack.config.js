@@ -9,6 +9,7 @@ module.exports = (env) => {
     mode: env.mode,
     output: {
       filename: "index_output.js",
+      publicPath: "/",
     },
 
     module: {

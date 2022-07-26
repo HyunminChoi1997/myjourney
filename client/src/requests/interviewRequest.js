@@ -8,7 +8,7 @@ const request = axios.create({
 
 export const getAllInterview = async (subject, language) => {
   const response = await request.get(`/${subject}/all/${language}`);
-  return response.data.interviewList;
+  return response.data;
 };
 
 export const postInterview = async (question, answer, language, subject) => {
