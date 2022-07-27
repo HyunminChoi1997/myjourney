@@ -9,9 +9,7 @@ function PostItem({ data }) {
   const blogOnClick = () => {
     navigate(`/${data.subject}/${data.id}`, {
       state: {
-        stateHTML: data.stateHTML,
-        title: data.title,
-        nickname: data.user.nickname,
+        data: data,
       },
     });
   };

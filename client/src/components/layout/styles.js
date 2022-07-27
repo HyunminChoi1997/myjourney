@@ -27,11 +27,12 @@ export const NavItem = styled.div`
   text-decoration: none;
   font-family: "Oswald-Light";
   font-size: 2rem;
+  text-align: center;
 
-  width: intrinsic; /* Safari/WebKit uses a non-standard name */
-  width: -moz-max-content; /* Firefox/Gecko */
-  width: -webkit-max-content; /* Chrome */
-  width: max-content;
+  //width: intrinsic; /* Safari/WebKit uses a non-standard name */
+  //width: -moz-max-content; /* Firefox/Gecko */
+  //width: -webkit-max-content; /* Chrome */
+  //width: max-content;
 `;
 
 export const FooterBox = styled.div`
@@ -63,7 +64,7 @@ export const DropdownMenu = styled.ul`
   padding: 0;
   margin: 0;
 
-  text-align: left;
+  text-align: center;
 
   z-index: 1;
 

@@ -92,7 +92,6 @@ function SubmitForm({ title, subject, navigate }) {
 }
 
 function Editor({ subject }) {
-  console.log(subject);
   const [title, setTitle] = useState("");
   const navigate = useNavigate();
 
@@ -114,7 +113,6 @@ function Editor({ subject }) {
   };
 
   const titleOnChange = (e) => {
-    console.log(e.target.value);
     setTitle(e.target.value);
   };
 

@@ -84,9 +84,22 @@ export const Creator = styled.div`
   font-size: 0.5rem;
 `;
 
-export const MemoButton = styled.button`
-  width: 150px;
-  height: 20px;
+export const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const Button = styled.button`
+  background-color: white;
+  border-radius: 5px;
+  padding: 3px;
+  margin: 2px;
+  transition: transform 1.5s;
+
+  &:hover {
+    transform: scale(1.2);
+  }
 `;
 
 export const CreateCardButton = styled.div`

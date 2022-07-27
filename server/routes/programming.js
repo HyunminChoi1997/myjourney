@@ -13,13 +13,19 @@ router.patch(
   programmingControllers.patchBlog
 );
 
+router.delete(
+  "/:subject/:post_id",
+  loginVerify,
+  programmingControllers.deleteBlog
+);
+
 module.exports = router;
 
 /**
  * post("/:subject")
  * body: title: string, stateJson: text(string), stateHTML text(string)
  *
- * update("/:subject/:post_id")
+ * patch("/:subject/:post_id")
  * body: newTitle: string, newStateJson: text(string), newStateHTML text(string)
  */
 

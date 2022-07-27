@@ -44,9 +44,15 @@ module.exports = {
   },
   patchBlog: async (req, res) => {
     try {
-      const id = req.params.post_id;
+      const { subject, post_id } = req.params;
       const { newTitle, newStateJson, newStateHTML } = req.body;
-      const blogInfo = await progblog.findOne({ where: { id } });
+      const blogInfo = await progblog.findOne({
+        where: { id: post_id, subject },
+      });
+
+      if (!blogInfo) {
+        return res.status(404).send({ message: "Post does not exist" });
+      }
 
       if (blogInfo.user_id !== req.user.id) {
         return res
@@ -59,10 +65,25 @@ module.exports = {
         stateJson: newStateJson,
         stateHTML: newStateHTML,
       });
+
+      if (req.user.position !== "admin") {
+        blogInfo.set({ show: false });
+      }
       await blogInfo.save();
       return res
         .status(201)
         .send({ id: blogInfo.id, message: "Updated Successfully" });
+    } catch (err) {
+      return res.status(501).send({ err, message: "Something Went Wrong" });
+    }
+  },
+  deleteBlog: async (req, res) => {
+    try {
+      const { subject, post_id } = req.params;
+      await progblog.destroy({ where: { id: post_id, subject } });
+      return res
+        .status(201)
+        .send({ id: post_id, message: "Deleted Successfully" });
     } catch (err) {
       return res.status(501).send({ err, message: "Something Went Wrong" });
     }

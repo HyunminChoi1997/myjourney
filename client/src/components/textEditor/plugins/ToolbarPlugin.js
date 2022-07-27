@@ -653,7 +653,7 @@ function ToolbarPlugin() {
           </button>
           {isLink &&
             createPortal(<FloatingLinkEditor editor={editor} />, document.body)}
-          <Divider />
+          {/* <Divider />
           <button
             onClick={() => {
               editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
@@ -689,7 +689,7 @@ function ToolbarPlugin() {
             aria-label="Justify Align"
           >
             <i className="format justify-align" />
-          </button>{" "}
+          </button>{" "} */}
         </>
       )}
     </div>

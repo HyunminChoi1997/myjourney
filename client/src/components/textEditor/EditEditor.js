@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from "react";
-import { $getRoot, $getSelection } from "lexical";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { $generateNodesFromDOM } from "@lexical/html";
+import { $generateHtmlFromNodes } from "@lexical/html";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
-import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
@@ -22,10 +22,9 @@ import { TRANSFORMERS } from "@lexical/markdown";
 import theme from "./themes/Theme";
 import ListMaxIndentLevelPlugin from "./plugins/ListMaxIndentLevelPlugin";
 import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
+import { updateBlogPost } from "../../requests/progblogRequest";
 
-function Placeholder() {
-  return <div className="editor-placeholder">작성하세요... Enter text...</div>;
-}
+import { Title, CenterContainer, Button } from "./styles";
 
 const editorConfig = {
   // The editor theme
@@ -51,61 +50,93 @@ const editorConfig = {
   ],
 };
 
-function CallHTMLPlugin() {
+function CallHTMLPlugin({ json }) {
   const [editor] = useLexicalComposerContext();
-  //보여줄때는 HTML로 보여주고
-
-  // const htmlString = `<code class="editor-code" spellcheck="false" data-highlight-language="javascript"><span>asfdasdfsdafaf</span></code><p class="editor-paragraph"><span>asdfasdfsdaf</span></p><p class="editor-paragraph"><span>sdafasdfdfsdaf</span></p><h1 class="editor-heading-h1"><span>asfsafd</span></h1>`;
-
-  // const onClick = () => {
-  //   editor.update(() => {
-  //     const dom = new DOMParser().parseFromString(
-  //       htmlString,
-  //       "application/xml"
-  //     );
-  //     console.log(dom);
-
-  //     const nodes = $generateNodesFromDOM(editor, dom);
-  //     console.log("nodes: ", nodes);
-
-  //     $getRoot().select();
-
-  //     const selection = $getSelection();
-  //     selection.insertNodes(nodes);
-  //   });
-  // };
-
-  //Text 수정할때는 json으로 불러오고
-  const json = `{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"for","type":"code-highlight","version":1,"highlightType":"keyword"}],"direction":"ltr","format":"","indent":0,"type":"code","version":1,"language":"javascript"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}`;
-  const parsedJson = JSON.parse(json);
-  const state = editor.parseEditorState(json);
-  editor.setEditorState(state);
+  setTimeout(() => {
+    const state = editor.parseEditorState(json);
+    editor.setEditorState(state);
+  }, 500);
 }
 
-function EditEditor() {
-  const editorStateRef = useRef();
+function SubmitForm({ id, title, subject, navigate }) {
+  const [editor] = useLexicalComposerContext();
 
-  const onChange = (editorState) => {
-    editorState.read(() => {
-      editorStateRef.current = editorState;
-      const root = $getRoot();
-      const selection = $getSelection();
-      console.log(root, selection);
+  const onClick = () => {
+    if (title === "") {
+      return Swal.fire("Title Needed", "제목이 필요합니다", "error");
+    }
+
+    Swal.fire({
+      title: "Update Post?",
+      text: "수정하시겠습니까?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        editor.update(() => {
+          const htmlString = $generateHtmlFromNodes(editor, null);
+          const json = JSON.stringify(editor.getEditorState());
+          updateBlogPost(title, json, htmlString, subject, id).then((res) => {
+            if (res.err) {
+              return Swal.fire("Error", res.err, "error");
+            }
+            Swal.fire("Completed", "수정했습니다", "success");
+            navigate(`/${subject}`);
+          });
+        });
+      }
     });
   };
 
+  return <Button onClick={onClick}>Update</Button>;
+}
+
+function EditEditor({ state }) {
+  const [title, setTitle] = useState("");
+  const navigate = useNavigate();
+  const { data } = state;
+
+  useEffect(() => {
+    setTitle(data.title);
+  }, [state]);
+
+  const onCancel = () => {
+    Swal.fire({
+      title: "Are you sure? Update won't be applied",
+      text: "정말 나가시겠습니까? 수정하신 글은 저장되지 않습니다.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Leave",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate(`/${data.subject}`);
+      }
+    });
+  };
+
+  const titleOnChange = (e) => {
+    setTitle(e.target.value);
+  };
   return (
     <>
       <LexicalComposer initialConfig={editorConfig}>
+        <CenterContainer>
+          <Title value={title} onChange={(e) => titleOnChange(e)} />
+        </CenterContainer>
         <div className="editor-container">
           <ToolbarPlugin />
           <div id="editor" className="editor-inner">
             <RichTextPlugin
               contentEditable={<ContentEditable className="editor-input" />}
-              placeholder={<Placeholder />}
             />
-            <OnChangePlugin onChange={onChange} />
-            <CallHTMLPlugin />
+            <CallHTMLPlugin json={data.stateJson} />
             <HistoryPlugin />
             <AutoFocusPlugin />
             <CodeHighlightPlugin />
@@ -115,6 +146,15 @@ function EditEditor() {
             <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
           </div>
         </div>
+        <CenterContainer>
+          <SubmitForm
+            id={data.id}
+            title={title}
+            subject={data.subject}
+            navigate={navigate}
+          />
+          <Button onClick={onCancel}>Leave</Button>
+        </CenterContainer>
       </LexicalComposer>
     </>
   );

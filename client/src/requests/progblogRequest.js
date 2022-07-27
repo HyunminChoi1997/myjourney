@@ -22,9 +22,13 @@ export const updateBlogPost = async (
   subject,
   post_id
 ) => {
-  return await request.post(`/${subject}/${post_id}`, {
+  return await request.patch(`/${subject}/${post_id}`, {
     newTitle,
     newStateJson,
     newStateHTML,
   });
+};
+
+export const deleteBlogPost = async (subject, post_id) => {
+  return await request.delete(`/${subject}/${post_id}`);
 };

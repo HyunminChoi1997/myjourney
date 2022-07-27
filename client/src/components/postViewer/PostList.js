@@ -25,7 +25,6 @@ function PostList({ subject }) {
           return Swal.fire("Error", res.err, "error");
         }
         setData(res.blogList);
-        console.log(res.blogList);
       })
       .then(() => setIsLoading(false));
   }, [subject, action]);
