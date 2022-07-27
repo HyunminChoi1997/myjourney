@@ -9,4 +9,6 @@ export SC_SECRET=$(aws ssm get-parameters --region ap-northeast-2 --names SC_SEC
 export SALTROUND=$(aws ssm get-parameters --region ap-northeast-2 --names SALTROUND --query Parameters[0].Value | sed 's/"//g')
 export DEPLOY=$(aws ssm get-parameters --region ap-northeast-2 --names DEPLOY --query Parameters[0].Value | sed 's/"//g')
 
+npx sequelize-cli db:migrate
+
 pm2 start index.js

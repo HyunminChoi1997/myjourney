@@ -8,7 +8,7 @@ const request = axios.create({
 
 export const getAllInterview = async (subject, language) => {
   const response = await request.get(`/${subject}/all/${language}`);
-  return response.data.interviewList;
+  return response.data;
 };
 
 export const postInterview = async (question, answer, language, subject) => {
@@ -17,4 +17,22 @@ export const postInterview = async (question, answer, language, subject) => {
 
 export const postMemoInterview = async (interview_id) => {
   return await request.post("/memo", { interview_id });
+};
+
+export const updateInterview = async (
+  newQuestion,
+  newAnswer,
+  newLanguage,
+  subject,
+  interview_id
+) => {
+  return await request.patch(`/${subject}/${interview_id}`, {
+    newQuestion,
+    newAnswer,
+    newLanguage,
+  });
+};
+
+export const deleteInterview = async (subject, interview_id) => {
+  return await request.delete(`/${subject}/${interview_id}`);
 };

@@ -4,13 +4,39 @@ const { loginVerify } = require("./loginVerify");
 const interviewControllers = require("../controllers/interview");
 
 router.get("/:subject/all/:language", interviewControllers.getAll);
-router.get("/:subject/nomemo/:language", loginVerify, interviewControllers.getNomemo);
+router.get(
+  "/:subject/nomemo/:language",
+  loginVerify,
+  interviewControllers.getNomemo
+);
 router.get("/memo/:language", loginVerify, interviewControllers.getMemo);
 
 router.post("/memo", loginVerify, interviewControllers.postMemo);
 router.post("/:subject", loginVerify, interviewControllers.post);
 
+router.patch(
+  "/:subject/:interview_id",
+  loginVerify,
+  interviewControllers.patchInterview
+);
+router.delete(
+  "/:subject/:interview_id",
+  loginVerify,
+  interviewControllers.deleteInterview
+);
+
 module.exports = router;
+
+/**
+ * post("/memo")
+ * body : interview_id : number
+ *
+ * post("/:subject")
+ * body: question: string, answer: string, language: string,
+ *
+ * patch("/:subject/:interview_id")
+ * body: newQuestion: string, newAnswer: string, newLanguage: string
+ */
 
 /**
  * Response Data Format to GET Requests

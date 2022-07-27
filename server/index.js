@@ -9,12 +9,17 @@ const passport = require("passport");
 const passportStrategy = require("./controllers/user/auth");
 const user = require("./routes/user");
 const interview = require("./routes/interview");
+const programming = require("./routes/programming");
 
 passportStrategy();
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://www.fatfobcodes.ml", "https://fatfobcodes.ml", "http://localhost:7000"],
+    origin: [
+      "https://www.fatfobcodes.ml",
+      "https://fatfobcodes.ml",
+      "http://localhost:7000",
+    ],
     credentials: true,
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
   })
@@ -26,7 +31,7 @@ const sessionOptions = {
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    maxAge: 3600000,
+    maxAge: 18000000,
   },
 };
 
@@ -46,6 +51,7 @@ app.get("/", (req, res) => {
 
 app.use("/user", user);
 app.use("/interview", interview);
+app.use("/programming", programming);
 
 server = app.listen(port, () => {
   console.log(`Listening on ${port}`);

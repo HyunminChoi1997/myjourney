@@ -125,12 +125,21 @@ module.exports = {
     try {
       const subject = req.params.subject;
       const { question, answer, language } = req.body;
-      const payload = { question, answer, subject, language, show: false, user_id: req.user.id };
+      const payload = {
+        question,
+        answer,
+        subject,
+        language,
+        show: false,
+        user_id: req.user.id,
+      };
       if (req.user.position === "admin") {
         payload.show = true;
       }
       const createdInfo = await interview.create(payload);
-      return res.status(201).send({ id: createdInfo.id });
+      return res
+        .status(201)
+        .send({ id: createdInfo.id, message: "Successfully Created" });
     } catch (err) {
       return res.status(501).send({ err, message: "Something Went Wrong" });
     }
@@ -142,6 +151,54 @@ module.exports = {
 
       const createdInfo = await memorized.create({ user_id, interview_id });
       return res.status(201).send({ id: createdInfo.id });
+    } catch (err) {
+      return res.status(501).send({ err, message: "Something Went Wrong" });
+    }
+  },
+
+  patchInterview: async (req, res) => {
+    try {
+      const { subject, interview_id } = req.params;
+      const { newQuestion, newAnswer, newLanguage } = req.body;
+      const interviewInfo = await interview.findOne({
+        where: { id: interview_id, subject },
+      });
+
+      if (!interviewInfo) {
+        return res.status(404).send({ message: "Card does not exist" });
+      }
+
+      if (interviewInfo.user_id !== req.user.id) {
+        return res
+          .status(401)
+          .send({ message: "This user did not create this card" });
+      }
+
+      interviewInfo.set({
+        question: newQuestion,
+        answer: newAnswer,
+        language: newLanguage,
+      });
+
+      if (req.user.position !== "admin") {
+        interviewInfo.set({ show: false });
+      }
+
+      await interviewInfo.save();
+      return res
+        .status(201)
+        .send({ id: interviewInfo.id, message: "Updated Successfully" });
+    } catch (err) {
+      return res.status(501).send({ err, message: "Something Went Wrong" });
+    }
+  },
+  deleteInterview: async (req, res) => {
+    try {
+      const { subject, interview_id } = req.params;
+      await interview.destroy({ where: { id: interview_id, subject } });
+      return res
+        .status(201)
+        .send({ id: interview_id, message: "Deleted Successfully" });
     } catch (err) {
       return res.status(501).send({ err, message: "Something Went Wrong" });
     }
