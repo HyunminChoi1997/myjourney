@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $generateHtmlFromNodes } from "@lexical/html";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
@@ -25,7 +26,6 @@ import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
 import { postBlogPost } from "../../../requests/progblogRequest";
 
 import { Title, CenterContainer, Button } from "./styles";
-import { $getSelection } from "lexical";
 
 function Placeholder() {
   return <div className="editor-placeholder">작성하세요... Enter text...</div>;

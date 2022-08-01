@@ -21,12 +21,16 @@ export default function Routers() {
       <Route path="/ai/:id" element={<BlogViewer />} />
       <Route path="/algorithm" element={<BlogPost />} />
       <Route path="/algorithm/:id" element={<BlogViewer />} />
-      <Route path="/Google" element={<BlogPost />} />
-      <Route path="/Google/:id" element={<BlogViewer />} />
-      <Route path="/calculus" element={<Home />} />
-      <Route path="/statistics" element={<Home />} />
-      <Route path="/probability" element={<Home />} />
-      <Route path="/linear-algebra" element={<Home />} />
+      <Route path="/google" element={<BlogPost />} />
+      <Route path="/google/:id" element={<BlogViewer />} />
+      <Route path="/calculus" element={<BlogPost />} />
+      <Route path="/calculus/:id" element={<BlogViewer />} />
+      <Route path="/statistics" element={<BlogPost />} />
+      <Route path="/statistics/:id" element={<BlogViewer />} />
+      <Route path="/probability" element={<BlogPost />} />
+      <Route path="/probability/:id" element={<BlogViewer />} />
+      <Route path="/linear-algebra" element={<BlogPost />} />
+      <Route path="/linear-algebra/:id" element={<BlogViewer />} />
       <Route path="/editor" element={<PostEditor />} />
       <Route path="/edit-editor" element={<PostEditEditor />} />
     </Routes>

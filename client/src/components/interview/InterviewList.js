@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
 import CardPost from "./CardPost";
 import InterviewCard from "./InterviewCard";
+import Loading from "../common/Loading";
 import { getAllInterview } from "../../requests/interviewRequest";
-import {
-  FlashcardsBox,
-  ToggleContainer,
-  Desc,
-  LoadingContainer,
-} from "./styles";
+import { FlashcardsBox, ToggleContainer, Desc } from "./styles";
 
 function InterviewList({ subject }) {
   const [data, setData] = useState([]);
@@ -38,7 +34,7 @@ function InterviewList({ subject }) {
   };
 
   return isLoading ? (
-    <LoadingContainer>Loading 로딩</LoadingContainer>
+    <Loading />
   ) : (
     <>
       <CardPost actionDetector={actionDetector} subject={subject} />

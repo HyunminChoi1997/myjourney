@@ -5,14 +5,14 @@ import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
 
+import Loading from "../../common/Loading";
+import PostItem from "./PostItem";
 import { getBlogPost } from "../../../requests/progblogRequest";
 import { CreatePostButton } from "./styles";
-import PostItem from "./PostItem";
 
 function PostList({ subject }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [action, setAction] = useState(false);
   const navigate = useNavigate();
   const { cache } = useSWRConfig();
   const user = cache.get("sign");
@@ -27,7 +27,7 @@ function PostList({ subject }) {
         setData(res.blogList);
       })
       .then(() => setIsLoading(false));
-  }, [subject, action]);
+  }, [subject]);
 
   const postOnClick = () => {
     if (!user) {
@@ -37,7 +37,7 @@ function PostList({ subject }) {
   };
 
   return isLoading ? (
-    <div>Loading</div>
+    <Loading />
   ) : (
     <>
       <CreatePostButton>

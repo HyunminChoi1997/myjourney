@@ -50,7 +50,7 @@ const editorConfig = {
   ],
 };
 
-function CallHTMLPlugin({ json }) {
+function InitialStatePlugin({ json }) {
   const [editor] = useLexicalComposerContext();
   setTimeout(() => {
     const state = editor.parseEditorState(json);
@@ -136,7 +136,7 @@ function EditEditor({ state }) {
             <RichTextPlugin
               contentEditable={<ContentEditable className="editor-input" />}
             />
-            <CallHTMLPlugin json={data.stateJson} />
+            <InitialStatePlugin json={data.stateJson} />
             <HistoryPlugin />
             <AutoFocusPlugin />
             <CodeHighlightPlugin />
