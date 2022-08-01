@@ -15,12 +15,14 @@ export default function Routers() {
       <Route path="/front" element={<Interview />} />
       <Route path="/back" element={<Interview />} />
       <Route path="/programming" element={<Interview />} />
-      <Route path="/languages" element={<BlogPost />} />
-      <Route path="/languages/:id" element={<BlogViewer />} />
+      <Route path="/python" element={<BlogPost />} />
+      <Route path="/python/:id" element={<BlogViewer />} />
       <Route path="/ai" element={<BlogPost />} />
       <Route path="/ai/:id" element={<BlogViewer />} />
       <Route path="/algorithm" element={<BlogPost />} />
       <Route path="/algorithm/:id" element={<BlogViewer />} />
+      <Route path="/Google" element={<BlogPost />} />
+      <Route path="/Google/:id" element={<BlogViewer />} />
       <Route path="/calculus" element={<Home />} />
       <Route path="/statistics" element={<Home />} />
       <Route path="/probability" element={<Home />} />

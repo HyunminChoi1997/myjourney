@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Layout from "../components/layout/Layout";
-import PostContent from "../components/postViewer/PostContent";
+import PostContent from "../components/programming/postViewer/PostContent";
 import "./PostEditor.css";
 
 //Block Direct Access

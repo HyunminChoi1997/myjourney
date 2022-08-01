@@ -433,6 +433,10 @@ function ToolbarPlugin() {
   const [isUnderline, setIsUnderline] = useState(false);
   const [isStrikethrough, setIsStrikethrough] = useState(false);
   const [isCode, setIsCode] = useState(false);
+  // const [isLeft, setIsLeft] = useState(false);
+  // const [isCenter, setIsCenter] = useState(false);
+  // const [isRight, setIsRight] = useState(false);
+  // const [isJustify, setIsJustify] = useState(false);
 
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
@@ -467,6 +471,10 @@ function ToolbarPlugin() {
       setIsStrikethrough(selection.hasFormat("strikethrough"));
       setIsCode(selection.hasFormat("code"));
       setIsRTL($isParentElementRTL(selection));
+      // setIsLeft(selection.hasFormat("left"));
+      // setIsCenter(selection.hasFormat("center"));
+      // setIsRight(selection.hasFormat("right"));
+      // setIsJustify(selection.hasFormat("justify"));
 
       // Update links
       const node = getSelectedNode(selection);
@@ -656,36 +664,40 @@ function ToolbarPlugin() {
           {/* <Divider />
           <button
             onClick={() => {
+              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "left");
               editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
             }}
-            className="toolbar-item spaced"
+            className={"toolbar-item spaced " + (isLeft ? "active" : "")}
             aria-label="Left Align"
           >
             <i className="format left-align" />
           </button>
           <button
             onClick={() => {
+              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "center");
               editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
             }}
-            className="toolbar-item spaced"
+            className={"toolbar-item spaced " + (isCenter ? "active" : "")}
             aria-label="Center Align"
           >
             <i className="format center-align" />
           </button>
           <button
             onClick={() => {
+              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "right");
               editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
             }}
-            className="toolbar-item spaced"
+            className={"toolbar-item spaced " + (isRight ? "active" : "")}
             aria-label="Right Align"
           >
             <i className="format right-align" />
           </button>
           <button
             onClick={() => {
+              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "justify");
               editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
             }}
-            className="toolbar-item"
+            className={"toolbar-item spaced " + (isJustify ? "active" : "")}
             aria-label="Justify Align"
           >
             <i className="format justify-align" />

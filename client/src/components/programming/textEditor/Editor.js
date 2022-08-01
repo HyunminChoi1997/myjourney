@@ -22,9 +22,10 @@ import { TRANSFORMERS } from "@lexical/markdown";
 import theme from "./themes/Theme";
 import ListMaxIndentLevelPlugin from "./plugins/ListMaxIndentLevelPlugin";
 import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
-import { postBlogPost } from "../../requests/progblogRequest";
+import { postBlogPost } from "../../../requests/progblogRequest";
 
 import { Title, CenterContainer, Button } from "./styles";
+import { $getSelection } from "lexical";
 
 function Placeholder() {
   return <div className="editor-placeholder">작성하세요... Enter text...</div>;

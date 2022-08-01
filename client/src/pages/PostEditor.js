@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import Layout from "../components/layout/Layout";
-import Editor from "../components/textEditor/Editor";
+import Editor from "../components/programming/textEditor/Editor";
 import "./PostEditor.css";
 
 function PostEditor() {

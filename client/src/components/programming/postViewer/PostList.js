@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSWRConfig } from "swr";
 import Swal from "sweetalert2";
-
-import { getBlogPost } from "../../requests/progblogRequest";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
+
+import { getBlogPost } from "../../../requests/progblogRequest";
 import { CreatePostButton } from "./styles";
 import PostItem from "./PostItem";
 

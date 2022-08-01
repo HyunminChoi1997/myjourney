@@ -22,7 +22,7 @@ import { TRANSFORMERS } from "@lexical/markdown";
 import theme from "./themes/Theme";
 import ListMaxIndentLevelPlugin from "./plugins/ListMaxIndentLevelPlugin";
 import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
-import { updateBlogPost } from "../../requests/progblogRequest";
+import { updateBlogPost } from "../../../requests/progblogRequest";
 
 import { Title, CenterContainer, Button } from "./styles";
 
