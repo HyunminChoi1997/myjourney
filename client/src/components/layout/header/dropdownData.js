@@ -5,9 +5,10 @@ const interviewDropdown = [
 ];
 
 const programmingDropdown = [
-  { id: 1, path: "/languages", title: "Programming Language" },
+  { id: 1, path: "/python", title: "Python" },
   { id: 2, path: "/ai", title: "Artificial Intelligence" },
   { id: 3, path: "/algorithm", title: "Algorithm" },
+  { id: 4, path: "/google", title: "Google" },
 ];
 
 const mathDropdown = [

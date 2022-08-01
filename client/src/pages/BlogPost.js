@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../components/layout/Layout";
-import PostList from "../components/postViewer/PostList";
+import PostList from "../components/programming/postViewer/PostList";
 
 function BlogPost() {
   const currURL = window.location.href.split("/");

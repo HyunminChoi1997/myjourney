@@ -194,8 +194,3 @@ export const Warning = styled.div`
   color: red;
   font-size: 0.6rem;
 `;
-
-export const LoadingContainer = styled.div`
-  width: 100vw;
-  height: 100vh;
-`;

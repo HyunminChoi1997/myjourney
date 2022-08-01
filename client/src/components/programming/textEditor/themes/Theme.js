@@ -30,6 +30,10 @@ const theme = {
     strikethrough: "editor-text-strikethrough",
     underlineStrikethrough: "editor-text-underlineStrikethrough",
     code: "editor-text-code",
+    // left: "editor-text-left-align",
+    // right: "editor-text-right-align",
+    // center: "editor-text-center-align",
+    // justify: "editor-text-justify-align",
   },
   code: "editor-code",
   codeHighlight: {

@@ -2,17 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSWRConfig } from "swr";
 import Swal from "sweetalert2";
-
-import { getBlogPost } from "../../requests/progblogRequest";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
-import { CreatePostButton } from "./styles";
+
+import Loading from "../../common/Loading";
 import PostItem from "./PostItem";
+import { getBlogPost } from "../../../requests/progblogRequest";
+import { CreatePostButton } from "./styles";
 
 function PostList({ subject }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [action, setAction] = useState(false);
   const navigate = useNavigate();
   const { cache } = useSWRConfig();
   const user = cache.get("sign");
@@ -27,7 +27,7 @@ function PostList({ subject }) {
         setData(res.blogList);
       })
       .then(() => setIsLoading(false));
-  }, [subject, action]);
+  }, [subject]);
 
   const postOnClick = () => {
     if (!user) {
@@ -37,7 +37,7 @@ function PostList({ subject }) {
   };
 
   return isLoading ? (
-    <div>Loading</div>
+    <Loading />
   ) : (
     <>
       <CreatePostButton>

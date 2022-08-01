@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $generateHtmlFromNodes } from "@lexical/html";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
@@ -22,9 +23,13 @@ import { TRANSFORMERS } from "@lexical/markdown";
 import theme from "./themes/Theme";
 import ListMaxIndentLevelPlugin from "./plugins/ListMaxIndentLevelPlugin";
 import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
-import { updateBlogPost } from "../../requests/progblogRequest";
+import { postBlogPost } from "../../../requests/progblogRequest";
 
 import { Title, CenterContainer, Button } from "./styles";
+
+function Placeholder() {
+  return <div className="editor-placeholder">작성하세요... Enter text...</div>;
+}
 
 const editorConfig = {
   // The editor theme
@@ -50,15 +55,7 @@ const editorConfig = {
   ],
 };
 
-function CallHTMLPlugin({ json }) {
-  const [editor] = useLexicalComposerContext();
-  setTimeout(() => {
-    const state = editor.parseEditorState(json);
-    editor.setEditorState(state);
-  }, 500);
-}
-
-function SubmitForm({ id, title, subject, navigate }) {
+function SubmitForm({ title, subject, navigate }) {
   const [editor] = useLexicalComposerContext();
 
   const onClick = () => {
@@ -67,8 +64,8 @@ function SubmitForm({ id, title, subject, navigate }) {
     }
 
     Swal.fire({
-      title: "Update Post?",
-      text: "수정하시겠습니까?",
+      title: "Upload Post?",
+      text: "포스팅 하시겠습니까?",
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -80,11 +77,11 @@ function SubmitForm({ id, title, subject, navigate }) {
         editor.update(() => {
           const htmlString = $generateHtmlFromNodes(editor, null);
           const json = JSON.stringify(editor.getEditorState());
-          updateBlogPost(title, json, htmlString, subject, id).then((res) => {
+          postBlogPost(title, json, htmlString, subject).then((res) => {
             if (res.err) {
               return Swal.fire("Error", res.err, "error");
             }
-            Swal.fire("Completed", "수정했습니다", "success");
+            Swal.fire("Completed", "작성했습니다", "success");
             navigate(`/${subject}`);
           });
         });
@@ -92,22 +89,17 @@ function SubmitForm({ id, title, subject, navigate }) {
     });
   };
 
-  return <Button onClick={onClick}>Update</Button>;
+  return <Button onClick={onClick}>Submit</Button>;
 }
 
-function EditEditor({ state }) {
+function Editor({ subject }) {
   const [title, setTitle] = useState("");
   const navigate = useNavigate();
-  const { data } = state;
-
-  useEffect(() => {
-    setTitle(data.title);
-  }, [state]);
 
   const onCancel = () => {
     Swal.fire({
-      title: "Are you sure? Update won't be applied",
-      text: "정말 나가시겠습니까? 수정하신 글은 저장되지 않습니다.",
+      title: "Are you sure? Everything written won't be saved",
+      text: "정말 나가시겠습니까? 작성하신 글은 저장되지 않습니다.",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -116,7 +108,7 @@ function EditEditor({ state }) {
       cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
-        navigate(`/${data.subject}`);
+        navigate(`/${subject}`);
       }
     });
   };
@@ -124,19 +116,24 @@ function EditEditor({ state }) {
   const titleOnChange = (e) => {
     setTitle(e.target.value);
   };
+
   return (
     <>
       <LexicalComposer initialConfig={editorConfig}>
         <CenterContainer>
-          <Title value={title} onChange={(e) => titleOnChange(e)} />
+          <Title
+            placeholder="제목 Title"
+            value={title}
+            onChange={(e) => titleOnChange(e)}
+          />
         </CenterContainer>
         <div className="editor-container">
           <ToolbarPlugin />
           <div id="editor" className="editor-inner">
             <RichTextPlugin
               contentEditable={<ContentEditable className="editor-input" />}
+              placeholder={<Placeholder />}
             />
-            <CallHTMLPlugin json={data.stateJson} />
             <HistoryPlugin />
             <AutoFocusPlugin />
             <CodeHighlightPlugin />
@@ -147,12 +144,7 @@ function EditEditor({ state }) {
           </div>
         </div>
         <CenterContainer>
-          <SubmitForm
-            id={data.id}
-            title={title}
-            subject={data.subject}
-            navigate={navigate}
-          />
+          <SubmitForm title={title} subject={subject} navigate={navigate} />
           <Button onClick={onCancel}>Leave</Button>
         </CenterContainer>
       </LexicalComposer>
@@ -160,4 +152,4 @@ function EditEditor({ state }) {
   );
 }
 
-export default EditEditor;
+export default Editor;

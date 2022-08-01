@@ -115,6 +115,22 @@ h1 {
   font-size: 94%;
 }
 
+.editor-text-left-align {
+  text-align: left;
+}
+
+.editor-text-right-align {
+  text-align: right;
+}
+
+.editor-text-center-align {
+  text-align: center;
+}
+
+.editor-text-justify-align {
+  text-align: justify;
+}
+
 .editor-link {
   color: rgb(33, 111, 219);
   text-decoration: none;
